@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import { OnepieceOverview } from "./components/OnepieceOverview"; // Import component
 
 function App() {

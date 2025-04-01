@@ -15,7 +15,6 @@ import versatileMageCover from "../Assets/versatile-mage.jpg"; // Bìa manga Ver
 import berserkCover from "../Assets/berserk.jpg"; // Bìa manga Berserk
 import beginningAfterEndCover from "../Assets/beginning-after-end.jpg"; // Bìa manga The Beginning After the End
 
-
 export const OnepieceOverview = () => {
   const [activeTab, setActiveTab] = useState("Overview"); // Mặc định tab "Overview" đang hoạt động 
   const [likeValue, setLikeValue] = useState(0); // Trạng thái để quản lý giá trị thanh trượt
