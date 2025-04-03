@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import { OnepieceOverview } from "./components/OnepieceOverview"; // Import component
+import { Chapter_item } from "./components/Chapter_item";
 
 function App() {
   return (
     <div className="App">
-      <OnepieceOverview /> {/* Sử dụng component */}
+      <Chapter_item/> {/* Sử dụng component */}
     </div>
   );
 }

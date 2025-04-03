@@ -1,0 +1,370 @@
+/* Reset mặc định */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Container chính */
+  .contain {
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    height: 150vh;
+  }
+  
+  /* Scroll View */
+  .scroll-view {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Header */
+  .row-view {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    background: #F9FBFB;
+    padding: 13px 65px;
+    border-bottom: 2px solid #1F1F1F;
+  }
+  
+  .row-view2 {
+    display: flex;
+    align-items: center;
+    padding-right: 6px;
+  }
+  
+  .logo {
+    height: 60px; /* Kích thước logo */
+  }
+  
+  .box {
+    flex: 1;
+    align-self: stretch;
+  }
+  
+  .row-view3 {
+    display: flex;
+    align-items: center;
+    background: #F9FBFB;
+    border: 1px solid #1F1F1F;
+    border-radius: 5px;
+    padding: 8px 16px;
+  }
+  
+  .image {
+    width: 18px;
+    height: 18px;
+    margin-right: 16px;
+    object-fit: fill;
+  }
+  
+  .input {
+    color: #1F1F1F;
+    font-size: 16px;
+    width: 329px;
+    background: none;
+    border: none;
+  }
+  
+  .image2 {
+    width: 18px;
+    height: 18px;
+    object-fit: fill;
+  }
+  
+  .image3 {
+    width: 24px;
+    height: 28px;
+    margin-right: 25px;
+    object-fit: fill;
+  }
+  
+  .row-view4 {
+    display: flex;
+    align-items: center;
+  }
+  
+  .image4 {
+    width: 51px;
+    height: 55px;
+    margin-right: 5px;
+    object-fit: fill;
+  }
+  
+  .column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .text3 {
+    color: #1F1F1F;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .text4 {
+    color: #1B6FA8;
+    font-size: 14px;
+  }
+  
+  /* Main Layout */
+  .row-view5 {
+    display: flex;
+    flex-direction: row;
+    min-height: calc(100vh - 80px);
+  }
+  
+  /* Sidebar */
+  .column2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #1B6FA8;
+    padding-top: 96px;
+    padding-bottom: 31px;
+    width: 256px;
+  }
+  
+  .text5 {
+    color: #F9FBFB;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    margin-left: 16px;
+  }
+  
+  .row-view6 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 17px;
+    margin-left: 16px;
+  }
+  
+  .text6 {
+    color: #F9FBFB;
+    font-size: 16px;
+    margin-right: 8px;
+  }
+  
+  .text7 {
+    color: #F9FBFB;
+    font-size: 16px;
+  }
+  
+  .column3 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 17px;
+    margin-left: 16px;
+    margin-right: 16px;
+    position: relative;
+  }
+  
+  .view {
+    display: flex;
+    align-items: center;
+  }
+  
+  .image5 {
+    width: 32px;
+    height: 32px;
+    object-fit: fill;
+  }
+  
+  .absolute-text {
+    position: absolute;
+    top: 9px;
+    right: -6px;
+    color: #F9FBFB;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .row-view7 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 17px;
+    margin-left: 16px;
+  }
+  
+  .row-view8 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 17px;
+    margin-left: 16px;
+  }
+  
+  .text8 {
+    color: #F9FBFB;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 16px;
+    margin-left: 16px;
+  }
+  
+  .row-view9 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 17px;
+    margin-left: 16px;
+  }
+  
+  .image6 {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+    object-fit: fill;
+  }
+  
+  .row-view10 {
+    display: flex;
+    align-items: center;
+    margin-left: 16px;
+  }
+  
+  .box2 {
+    width: 16px;
+    height: 16px;
+    background: #1B6FA8;
+    border-radius: 3px;
+    border: 1px solid #F9FBFB;
+    margin-right: 16px;
+  }
+  
+  .box3 {
+    width: 16px;
+    height: 16px;
+    background: #78A2B3;
+    border-radius: 3px;
+  }
+  
+  /* Main Content */
+  .column4 {
+    flex: 1;
+    align-items: flex-start;
+    position: relative;
+  }
+  
+  .column5 {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #1F1F1F;
+    border: 2px solid #1F1F1F;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  
+  .column6 {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Căn giữa nội dung */
+    padding-bottom: 16px;
+    margin-left: 32px;
+    margin-right: 32px;
+  }
+  
+  /* Tabs */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+  
+  .text9,
+  .text10,
+  .text11 {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 700;
+    background-color: #1B6FA8;
+    border: 1px solid #1F1F1F;
+    padding: 8px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .text9.active,
+  .text10.active,
+  .text11.active {
+    background-color: #FFFFFF;
+    color: #1F1F1F;
+  }
+  
+  .view2 {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Manga Page */
+  .image9 {
+    width: 513px;
+    height: 768px;
+    object-fit: contain;
+    margin: 0 auto; /* Căn giữa hình ảnh */
+  }
+  
+  /* Navigation Buttons */
+  .row-view11 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 16px;
+    -webkit-text-fill-color: black;
+
+  }
+  
+  .text13,
+  .text14 {
+    color: black;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: white;
+  }
+  
+  .button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #F9FBFB;
+    border-radius: 5px;
+    border: 1px solid #1F1F1F;
+    padding: 7px 20px;
+    text-align: center;
+  }
+  
+  .text12 {
+    color: #1F1F1F;
+    font-size: 16px;
+  }
+  
+  /* Decorative Elements */
+  .absolute-box {
+    position: absolute;
+    bottom: 322px;
+    left: 145px;
+    width: 201px;
+    height: 201px;
+    background: #1B6FA880;
+    border-radius: 25px;
+  }
+  
+  .absolute-view {
+    position: absolute;
+    bottom: -81px;
+    right: 1px;
+    width: 278px;
+    display: flex;
+    flex-direction: column;
+    background: #1B6FA880;
+    border-radius: 25px;
+    padding: 269px 31px 98px 103px;
+  }
