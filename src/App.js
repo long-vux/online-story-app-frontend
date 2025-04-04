@@ -1,27 +1,16 @@
-// import React from "react";
-// import { OnepieceOverview } from "./components/OnepieceOverview"; // Import component
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <OnepieceOverview /> {/* Sử dụng component */}
-//     </div>
-//   );
-// }
-
-// export default App;
-
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import CreateStoryForm from './pages/CreateStoryForm';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import MainRoutes from './routes/MainRoutes';
+import AdminRoutes from './routes/AdminRoutes';
 
 const App = () => {
   return (
     <Router>
-      <Switch>
-        <Route path="/admin/create-story" component={CreateStoryForm} />
-        {/* Các route khác */}
-      </Switch>
+      <Routes>
+        <Route path="/*" element={<MainRoutes />} />
+        <Route path="/admin/*" element={<AdminRoutes />} />
+      </Routes>
+
     </Router>
   );
 };

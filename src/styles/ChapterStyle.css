@@ -1,0 +1,220 @@
+/* Reset mặc định */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Full màn hình trên web */
+  .onepiece-overview {
+    background-color: #f9fbfb;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+    font-family: "Lato", Helvetica, sans-serif;
+  }
+  
+  .onepiece-overview .div-2 {
+    background-color: #f9fbfb;
+    border: 1px solid #1f1f1f;
+    width: 100%;
+    max-width: 1920px;
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Header */
+  .onepiece-overview .overlap-26 {
+    background-color: #f9fbfb;
+    border-bottom: 2px solid #1f1f1f;
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  .logo-instance img {
+    height: 60px;
+  }
+  
+  .group-39-instance {
+    flex: 1;
+    margin-right: 30px;
+  }
+  
+  .group-39-instance input {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px;
+    border: 1px solid #1f1f1f;
+    border-radius: 5px;
+    background-color: #f9fbfb;
+    color: #1f1f1f;
+    font-size: 18px;
+  }
+  
+  .user-section {
+    display: flex;
+    align-items: center;
+  }
+  
+  .group-135 {
+    position: relative;
+    margin-right: 30px;
+  }
+  
+  .group-135 img {
+    height: 36px;
+  }
+  
+  .notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #e40066;
+    color: #f9fbfb;
+    border-radius: 50%;
+    padding: 4px 8px;
+    font-size: 14px;
+  }
+  
+  .user-icon2 {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-icon2 img {
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  
+  .user-name {
+    color: #1f1f1f;
+    font-weight: 700;
+    font-size: 18px;
+  }
+  
+  .verified {
+    margin-left: 8px;
+    color: #1b6fa8;
+    font-size: 14px;
+  }
+  
+  /* Main Layout */
+  .onepiece-overview .overlap-25 {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    display: flex;
+  }
+  
+  /* Main Content */
+  .rectangle-4 {
+    background-color: #1f1f1f;
+    border: 2px solid #1f1f1f;
+    flex: 1;
+    padding: 30px;
+    color: #f9fbfb;
+    min-height: calc(100vh - 80px);
+  }
+  
+  /* Tabs */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+  
+  .tabs button {
+    background-color: #1B6FA8;
+    color: #FFFFFF;
+    border: 1px solid #1f1f1f;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 5px;
+  }
+  
+  .tabs button.active {
+    background-color: #FFFFFF;
+    color: #1f1f1f;
+  }
+  
+  /* Chapter List */
+  .chapter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .chapter-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 15px 20px;
+    border-radius: 5px;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Thêm bóng nhẹ để nổi bật */
+  }
+  
+  .chapter-number {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f1f1f;
+  }
+  
+  .chapter-icons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .chapter-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* Decorative Rectangles */
+  .rectangle-5 {
+    background: linear-gradient(0deg, rgba(31, 31, 31, 0.1) 0%, rgba(31, 31, 31, 0.1) 100%),
+                linear-gradient(0deg, rgba(27, 111, 168, 0.5) 0%, rgba(27, 111, 168, 0.5) 100%);
+    border-radius: 25px;
+    height: 200px;
+    left: 173px;
+    position: absolute;
+    top: 449px;
+    transform: rotate(-60deg);
+    width: 200px;
+  }
+  
+  .rectangle-6 {
+    background: linear-gradient(0deg, rgba(31, 31, 31, 0.1) 0%, rgba(31, 31, 31, 0.1) 100%),
+                linear-gradient(0deg, rgba(27, 111, 168, 0.5) 0%, rgba(27, 111, 168, 0.5) 100%);
+    border-radius: 25px;
+    height: 120px;
+    left: 90%;
+    position: absolute;
+    top: 58px;
+    transform: rotate(-60deg);
+    width: 120px;
+  }
+  
+  .rectangle-8 {
+    background-color: #f9fbfb;
+    border-top: 2px solid #1f1f1f;
+    height: 50px;
+    left: 256px;
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - 256px);
+  }
