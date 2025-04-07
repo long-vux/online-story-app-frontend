@@ -2,8 +2,11 @@ import React from "react";
 import rectangle80 from "../assets/rectangle-80.png";
 // import google from "./google.png";
 // import lock1 from "./lock-1.svg";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  
   return (
     <div className="w-screen h-screen flex bg-[#f9fbfb] overflow-hidden">
       {/* Left Panel */}
@@ -63,7 +66,7 @@ const LoginPage = () => {
           <div className="mt-6 text-center text-sm">
             <p>
               <span className="text-[#1f1f1f]">Don’t have an account? </span>
-              <span className="text-[#78a2b3] font-bold cursor-pointer">Sign up</span>
+              <span className="text-[#78a2b3] font-bold cursor-pointer" onClick={() => navigate('/register')}>Sign up</span>
             </p>
           </div>
         </div>

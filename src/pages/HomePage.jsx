@@ -1,141 +1,108 @@
 import React from "react";
-import Logo from "../assets/Logo.svg";
-// import google from "../assets/google.png";
-// import group394 from "../assets/group-394.png";
-// import image from "../assets/image.svg";
-// import lock1 from "../assets/lock-1.svg";
-import profile from "../assets/profile.jpg";
-import rectangle80 from "../assets/rectangle-80.png";
-import "./homepage.css";
+import Navbar from "../components/layout/Navbar";
+import StoryCard from "../components/story/StoryCard";
 
-const Homepage = () => {
+const mockMangas = [
+  { 
+    img: "one-piece-cover.jpg", 
+    title: "One Piece", 
+    author: "Eiichiro Oda", 
+    chapter: "Chapter 1033", 
+    rating: "9.36" 
+  },
+  { 
+    img: "solo-leveling.jpg", 
+    title: "Solo Leveling", 
+    author: "Jung Rok", 
+    chapter: "Chapter 124", 
+    rating: "9.15" 
+  },
+  { 
+    img: "versatile-mage.jpg", 
+    title: "Versatile Mage", 
+    author: "Chaos", 
+    chapter: "Chapter 155", 
+    rating: "9.78" 
+  },
+  { 
+    img: "berserk.jpg", 
+    title: "Berserk", 
+    author: "Kentaro Miura", 
+    chapter: "Chapter 360", 
+    rating: "9.22" 
+  },
+  { 
+    img: "beginning-after-end.jpg", 
+    title: "The Beginning After the End", 
+    author: "TurtleMe", 
+    chapter: "Chapter 122", 
+    rating: "9.05" 
+  }
+];
+
+const categories = [
+  "All category", "Shonen", "Shojo", "Seinen", "Josei", "Kodomomuke",
+  "One Shot", "Action", "Adventure", "Fantasy", "Dark Fantasy", 
+  "Ecchi", "Romance", "Horror", "Parody", "Mistery"
+];
+
+
+const HomePage = () => {
   return (
-    <div className="homepage">
-      <div className="homepage-signin">
-        <div className="overlap">
-          <div className="group">
-            <div className="overlap-2">
-              <div className="rectangle" />
+    <div className="flex min-h-screen">
+      <Navbar />
 
-              {/* <img className="img" alt="Group" src={group394} /> */}
-              <img className="img" alt="Group" src={profile} />
-              
-
-              <p className="welcome-back">
-                <span className="text-wrapper-2">Welcome </span>
-
-                <span className="text-wrapper-3">back</span>
-
-                <span className="text-wrapper-2">!</span>
-              </p>
-
-              <p className="p">
-                Discover manga, manhua and manhwa, track your progress, have
-                fun, read manga.
-              </p>
-
-              <div className="overlap-group-wrapper">
-                <div className="overlap-group-2">
-                  <div className="rectangle-2" />
-
-                  <div className="text-wrapper-4">Name</div>
-
-                  <img
-                    className="img-2"
-                    alt="Iconsax bulk profile"
-                    src={profile}
-                  />
-
-                  <div className="text-wrapper-5">Krowl Bell</div>
-                </div>
-              </div>
-
-              <div className="overlap-wrapper">
-                <div className="overlap-group-2">
-                  <div className="rectangle-2" />
-
-                  <div className="text-wrapper-4">Password</div>
-
-                  {/* <img className="img-2" alt="Iconsax bulk" src={lock1} /> */}
-                  <img className="img-2" alt="Iconsax bulk" src={profile} />
-
-                  <div className="text-wrapper-6">....................</div>
-                </div>
-              </div>
-
-              <div className="div-wrapper">
-                <div className="overlap-group-2">
-                  <div className="rectangle-2" />
-
-                  <div className="text-wrapper-4">Email</div>
-
-                  <div className="text-wrapper-7">@</div>
-
-                  <div className="text-wrapper-8">DragonballZ@Krowl.com</div>
-                </div>
-              </div>
-
-              <div className="group-2">
-                <div className="overlap-group-2">
-                  <div className="rectangle-2" />
-
-                  <div className="text-wrapper-4">Confirm password</div>
-
-                  {/* <img className="img-2" alt="Iconsax bulk" src={image} /> */}
-                  <img className="img-2" alt="Iconsax bulk" src={profile} />
-
-                  <div className="text-wrapper-6">....................</div>
-                </div>
-              </div>
-
-              <div className="group-3">
-                <p className="text-wrapper-9">Send notification to my email</p>
-
-                <div className="rectangle-3" />
-              </div>
-
-              {/* <div className="group-4">
-                <div className="overlap-3">
-                  <div className="rectangle-4" />
-
-                  <div className="group-wrapper">
-                    <div className="group-5">
-                      <div className="group-6">
-                        <div className="text-wrapper-10">
-                          Sign in with Google
-                        </div>
-
-                        <img className="google" alt="Google" src={google} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
-            </div>
-
-            <p className="already-have-an">
-              <span className="text-wrapper-11">Already have an account? </span>
-
-              <span className="text-wrapper-12">Log in</span>
-            </p>
-
-            <p className="go-back-to-home-page">
-              <span className="text-wrapper-11">Go back to </span>
-
-              <span className="text-wrapper-12">home page</span>
-            </p>
-          </div>
-
-          <Logo
-            className="logo-instance"
-            spanClassName="design-component-instance-node"
+      <div className="flex-1 bg-gray-900 text-white p-6">
+        {/* Out now */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-bold mb-4">Out now 🎉</h2>
+          <img 
+            src={require("../assets/profile.jpg")} 
+            alt="One Piece Banner" 
+            className="rounded-lg shadow-lg w-full h-60 object-cover"
           />
-        </div>
+        </section>
 
-        <img className="rectangle-5" alt="Rectangle" src={rectangle80} />
+        {/* Hot Categories */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold mb-4 text-pink-400">🔥 Hot Categories</h2>
+          <div className="flex flex-wrap gap-2">
+            {categories.map((category, idx) => (
+              <button
+                key={idx}
+                className="bg-yellow-500 hover:bg-yellow-400 text-black font-medium px-4 py-1 rounded-full text-sm transition-colors"
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* Popular this month */}
+        <section className="mb-10">
+          <h2 className="text-xl font-semibold mb-4">🔥 Popular this month</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {mockMangas.map((manga, idx) => (
+              <StoryCard key={idx} manga={manga} />
+            ))}
+          </div>
+        </section>
+
+        {/* Recent Uploads */}
+        <section>
+          <h2 className="text-xl font-semibold mb-4">🆕 Recent Uploads</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {mockMangas
+              .slice()
+              .reverse()
+              .map((manga, idx) => (
+                <StoryCard key={idx} manga={manga} />
+              ))}
+          </div>
+        </section>
       </div>
     </div>
   );
 };
 
-export default Homepage;
+export default HomePage;

@@ -1,5 +1,5 @@
 import React from "react";
-import RecommendationCard from "./RecommendationCard";
+import StoryCard from "./StoryCard";
 
 const Recommendations = () => {
   const recommendedManga = [
@@ -47,7 +47,7 @@ const Recommendations = () => {
       </p>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {recommendedManga.map((manga, index) => (
-          <RecommendationCard key={index} manga={manga} />
+          <StoryCard key={index} manga={manga} />
         ))}
       </div>
     </div>

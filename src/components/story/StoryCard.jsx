@@ -1,6 +1,6 @@
 import React from "react";
 
-const RecommendationCard = ({ manga }) => {
+const StoryCard = ({ manga }) => {
   return (
     <div className="bg-gray-700 p-3 rounded-lg shadow hover:shadow-md transition-shadow hover:bg-gray-600">
       <img 
@@ -16,4 +16,4 @@ const RecommendationCard = ({ manga }) => {
   );
 };
 
-export default RecommendationCard;
+export default StoryCard;

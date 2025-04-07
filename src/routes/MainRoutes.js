@@ -6,7 +6,7 @@ import Header from '../components/layout/Header';
 import HomePage from '../pages/HomePage';
 import ChapterItem from '../pages/ChapterItem';
 import LoginPage from '../pages/LoginPage';
-import SignUpPage from '../pages/SignUpPage';
+import RegisterPage from '../pages/RegisterPage';
 // import Chapters from '../pages/ChaptersModal';
 // import { Navigate } from 'react-router-dom'
 // import {jwtDecode} from 'jwt-decode'
@@ -24,8 +24,8 @@ const AdminRoutes = () => {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/login' element={<LoginPage />} />
-        <Route path='/sign-up' element={<SignUpPage />} />
-        
+        <Route path='/register' element={<RegisterPage />} />
+
         <Route path='/story-detail' element={<StoryDetail />} />
         <Route path='/chapter-item' element={<ChapterItem />} />
       </Routes>
