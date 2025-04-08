@@ -65,7 +65,7 @@ const HomePage = () => {
 
         {/* Hot Categories */}
         <section className="mb-10">
-          <h2 className="text-xl font-semibold mb-4 text-pink-400">🔥 Hot Categories</h2>
+          <h2 className="text-xl font-semibold mb-4 text-pink-400">Categories</h2>
           <div className="flex flex-wrap gap-2">
             {categories.map((category, idx) => (
               <button
@@ -80,7 +80,7 @@ const HomePage = () => {
 
         {/* Popular this month */}
         <section className="mb-10">
-          <h2 className="text-xl font-semibold mb-4">🔥 Popular this month</h2>
+          <h2 className="text-xl font-semibold mb-4">Popular this month</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {mockMangas.map((manga, idx) => (
               <StoryCard key={idx} manga={manga} />

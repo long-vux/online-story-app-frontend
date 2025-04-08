@@ -2,15 +2,22 @@ import React from "react";
 import logo from "../../assets/Logo.svg";
 import notificationIcon from "../../assets/notification.svg";
 import userIcon from "../../assets/user-icon.png";
+import { useNavigate } from "react-router-dom";
 
+// Header componen
 const Header = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="flex items-center justify-between w-full h-20 bg-gray-100 border-b-2 border-gray-800 px-8 sticky top-0 z-10 ">
-      <img src={logo} alt="Yuki Logo" className="ml-2 h-12" />
+    <div className="flex items-center justify-between w-full h-16 bg-gray-100 border-b-2 border-gray-800 px-8 sticky top-0 z-10 ">
+      <button onClick={() => navigate("/")}>
+        <img src={logo} alt="Yuki Logo" className="ml-2 h-10" />
+      </button>
+
       <input
         type="text"
         placeholder="Search here"
-        className="w-full max-w-md px-4 py-2 border border-gray-800 rounded-[50px] bg-gray-100 text-gray-800"
+        className="w-full max-w-md px-4 py-1 border border-gray-800 rounded-[50px] bg-gray-100 text-gray-800"
       />
       <div className="flex items-center space-x-6">
         <div className="relative">

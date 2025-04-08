@@ -2,7 +2,7 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 
 // import CreateStoryForm from './pages/CreateStoryForm';
-import HomePage from '../pages/HomePage';
+import DashBoard from '../pages/DashBoard';
 // import {jwtDecode} from 'jwt-decode'
 const AdminRoutes = () => {
 
@@ -14,7 +14,7 @@ const AdminRoutes = () => {
 
   return (
     <Routes>
-      <Route path='/dashboard' element={ <HomePage /> } />
+      <Route path='/dashboard' element={ <DashBoard /> } />
       
     </Routes>
   );

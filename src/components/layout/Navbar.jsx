@@ -14,6 +14,9 @@ import {
   FaSignInAlt,
 } from "react-icons/fa";
 
+import { MdLeaderboard } from "react-icons/md";
+import {jwtDecode} from 'jwt-decode';
+
 const pathToLabel = {
   "/": "Home",
   "/discover": "Discover Comics",
@@ -23,14 +26,23 @@ const pathToLabel = {
   "/settings": "Settings",
   "/donate": "Donate",
   "/login": "Login",
+  "/dashboard": "Dashboard",
 };
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isLoggedIn = localStorage.getItem("user");
+  console.log(isLoggedIn);
+  let isAdmin = false;
 
   const [activeItem, setActiveItem] = useState("Discover Comics");
+
+  if (isLoggedIn) {
+   const user = jwtDecode(isLoggedIn);
+   isAdmin = user.role === "Admin"; 
+   console.log('user',user);
+  }
 
   // 🔁 Update activeItem mỗi khi đường dẫn thay đổi
   useEffect(() => {
@@ -44,6 +56,9 @@ const Navbar = () => {
       { label: "Home", icon: <FaHome />, link: "/" },
       { label: "Discover Comics", icon: <FaCompass />, link: "/discover" },
       { label: "Notifications", icon: <FaBell />, link: "/notifications" },
+      isAdmin
+        ? { label: "Dashboard", icon: <MdLeaderboard />, link: "/admin/dashboard" }
+        : [],
     ],
     General: [
       { label: "Profile", icon: <FaUser />, link: "/profile" },
