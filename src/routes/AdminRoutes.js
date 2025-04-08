@@ -1,6 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-
+import Header from '../components/layout/Header';
 // import CreateStoryForm from './pages/CreateStoryForm';
 import DashBoard from '../pages/DashBoard';
 // import {jwtDecode} from 'jwt-decode'
@@ -13,10 +13,13 @@ const AdminRoutes = () => {
   // }
 
   return (
+    <>
+    <Header />
+
     <Routes>
       <Route path='/dashboard' element={ <DashBoard /> } />
       
-    </Routes>
+    </Routes></>
   );
 };
 

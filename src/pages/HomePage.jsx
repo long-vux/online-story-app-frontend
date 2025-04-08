@@ -49,9 +49,6 @@ const categories = [
 
 const HomePage = () => {
   return (
-    <div className="flex min-h-screen">
-      <Navbar />
-
       <div className="flex-1 bg-gray-900 text-white p-6">
         {/* Out now */}
         <section className="mb-8">
@@ -101,7 +98,6 @@ const HomePage = () => {
           </div>
         </section>
       </div>
-    </div>
   );
 };
 

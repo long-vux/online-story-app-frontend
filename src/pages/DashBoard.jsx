@@ -6,11 +6,11 @@ import PageManagement from '../components/admin/PageManagement';
 import UserManagement from '../components/admin/UserManagement';
 
 const App = () => {
-  const [activeSection, setActiveSection] = useState('story');
+  const [activeSection, setActiveSection] = useState('user');
 
   return (
     <div className="min-h-screen bg-gray-100 flex">
-      <AdminNavbar setActiveSection={setActiveSection} />
+      <AdminNavbar setActiveSection={setActiveSection} activeSection={activeSection} />      
       <div className="flex-1">
         {activeSection === 'user' && <UserManagement />}
         {activeSection === 'story' && <StoryManagement />}

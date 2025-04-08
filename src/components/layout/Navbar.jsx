@@ -36,7 +36,7 @@ const Navbar = () => {
   console.log(isLoggedIn);
   let isAdmin = false;
 
-  const [activeItem, setActiveItem] = useState("Discover Comics");
+  const [activeItem, setActiveItem] = useState("Home");
 
   if (isLoggedIn) {
    const user = jwtDecode(isLoggedIn);
@@ -46,7 +46,7 @@ const Navbar = () => {
 
   // 🔁 Update activeItem mỗi khi đường dẫn thay đổi
   useEffect(() => {
-    const currentLabel = pathToLabel[location.pathname] || "Discover Comics";
+    const currentLabel = pathToLabel[location.pathname] || "Home";
     setActiveItem(currentLabel);
   }, [location.pathname]);
 
