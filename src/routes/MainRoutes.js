@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Navbar from '../components/layout/Navbar'; // Đảm bảo đường dẫn đúng
-import Notification from '../pages/Notification'; // Đảm bảo đường dẫn đúng
+import { Routes, Route, useLocation } from 'react-router-dom';
+import Navbar from '../components/layout/Navbar';
+import Notification from '../pages/Notification';
 import StoryDetail from '../pages/StoryDetail';
 import Header from '../components/layout/Header';
 import HomePage from '../pages/HomePage';
@@ -11,17 +11,23 @@ import RegisterPage from '../pages/RegisterPage';
 import Profile from '../pages/Profile';
 
 const MainRoutes = () => {
-  const [activeSection, setActiveSection] = useState('story'); // Quản lý trạng thái active cho navbar
+  const [activeSection, setActiveSection] = useState('story');
+  const location = useLocation();
+
+  // Các đường dẫn không cần hiển thị Header và Navbar
+  const hideLayout = ['/login', '/register'].includes(location.pathname);
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       {/* Header */}
-      <Header />
+      {!hideLayout && <Header />}
 
       {/* Layout chính */}
       <div className="flex flex-1">
         {/* Sidebar (Navbar) bên trái */}
-        <Navbar setActiveSection={setActiveSection} activeSection={activeSection} />
+        {!hideLayout && (
+          <Navbar setActiveSection={setActiveSection} activeSection={activeSection} />
+        )}
 
         {/* Nội dung chính (các route) */}
         <div className="flex-1">

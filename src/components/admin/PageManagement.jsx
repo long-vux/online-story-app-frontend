@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FiEdit, FiTrash2  } from "react-icons/fi";
 
 const PageManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,26 +19,27 @@ const PageManagement = () => {
   };
 
   return (
-    <div className="p-6 flex-1 relative">
+    <div className="p-6 pt-0 flex-1 relative">
       <h3 className="text-2xl font-semibold mb-4">Page Management</h3>
       <table className="w-full table-auto border-collapse">
         <thead>
           <tr className="bg-gray-200">
             <th className="p-2 border">Chapter ID</th>
-            <th className="p-2 border">URL Ảnh</th>
-            <th className="p-2 border">Thứ tự</th>
-            <th className="p-2 border">Hành động</th>
+            <th className="p-2 border">Image url</th>
+            <th className="p-2 border">Chapter number</th>
+            <th className="p-2 border">Actions</th>
           </tr>
         </thead>
         <tbody>
           {pages.map((page) => (
             <tr key={page._id} className="hover:bg-gray-100">
-              <td className="p-2 border">{page.chapter_id}</td>
-              <td className="p-2 border">{page.image_url}</td>
-              <td className="p-2 border">{page.image_order}</td>
-              <td className="p-2 border">
-                <button className="bg-blue-500 text-white px-2 py-1 rounded mr-2">Sửa</button>
-                <button className="bg-red-500 text-white px-2 py-1 rounded">Xóa</button>
+              <td className="p-2 border text-center">{page.chapter_id}</td>
+              <td className="p-2 border text-center">{page.image_url}</td>
+              <td className="p-2 border text-center">{page.image_order}</td>
+              <td className="p-2 border text-center">
+                <button className="bg-blue-500 text-white px-2 py-2 rounded mr-2"><FiEdit />
+                </button>
+                <button className="bg-red-500 text-white px-2 py-2 rounded"><FiTrash2 /></button>
               </td>
             </tr>
           ))}

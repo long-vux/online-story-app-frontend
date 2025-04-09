@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FiEdit, FiTrash2  } from "react-icons/fi";
 
 const StoryManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,28 +25,28 @@ const StoryManagement = () => {
   };
 
   return (
-    <div className="p-6 flex-1 relative">
+    <div className="p-6 pt-0 flex-1 relative">
       <h3 className="text-2xl font-semibold mb-4">Story Management</h3>
       <table className="w-full table-auto border-collapse">
         <thead>
           <tr className="bg-gray-200">
-            <th className="p-2 border">Tiêu đề</th>
-            <th className="p-2 border">Tác giả</th>
-            <th className="p-2 border">Trạng thái</th>
-            <th className="p-2 border">Số chương</th>
-            <th className="p-2 border">Hành động</th>
+            <th className="p-2 border">Title</th>
+            <th className="p-2 border">Authors</th>
+            <th className="p-2 border">Status</th>
+            <th className="p-2 border">Number of chapters</th>
+            <th className="p-2 border">Actions</th>
           </tr>
         </thead>
         <tbody>
           {stories.map((story) => (
             <tr key={story._id} className="hover:bg-gray-100">
-              <td className="p-2 border">{story.title}</td>
-              <td className="p-2 border">{story.author}</td>
-              <td className="p-2 border">{story.status}</td>
-              <td className="p-2 border">{story.number_of_chapters}</td>
-              <td className="p-2 border">
-                <button className="bg-blue-500 text-white px-2 py-1 rounded mr-2">Sửa</button>
-                <button className="bg-red-500 text-white px-2 py-1 rounded">Xóa</button>
+              <td className="p-2 border text-center">{story.title}</td>
+              <td className="p-2 border text-center">{story.author}</td>
+              <td className="p-2 border text-center">{story.status}</td>
+              <td className="p-2 border text-center">{story.number_of_chapters}</td>
+              <td className="p-2 border text-center">
+                <button className="bg-blue-500 text-white px-2 py-2 rounded mr-2"><FiEdit /></button>
+                <button className="bg-red-500 text-white px-2 py-2 rounded"><FiTrash2 /></button>
               </td>
             </tr>
           ))}

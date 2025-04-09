@@ -9,13 +9,15 @@ const App = () => {
   const [activeSection, setActiveSection] = useState('user');
 
   return (
-    <div className="min-h-screen bg-gray-100 flex">
-      <AdminNavbar setActiveSection={setActiveSection} activeSection={activeSection} />      
-      <div className="flex-1">
-        {activeSection === 'user' && <UserManagement />}
-        {activeSection === 'story' && <StoryManagement />}
-        {activeSection === 'chapter' && <ChapterManagement />}
-        {activeSection === 'page' && <PageManagement />}
+    <div className="justify-center  h-[400px] mt-[50px] flex flex-row">
+      <div className='flex w-[70%] items-start'>
+        <AdminNavbar setActiveSection={setActiveSection} activeSection={activeSection} />
+        <div className="flex-1">
+          {activeSection === 'user' && <UserManagement />}
+          {activeSection === 'story' && <StoryManagement />}
+          {activeSection === 'chapter' && <ChapterManagement />}
+          {activeSection === 'page' && <PageManagement />}
+        </div>
       </div>
     </div>
   );

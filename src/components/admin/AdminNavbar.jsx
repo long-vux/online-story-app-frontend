@@ -2,7 +2,7 @@ import React from 'react';
 
 const AdminNavbar = ({ setActiveSection, activeSection }) => {
   return (
-    <div className="w-48 h-screen bg-gray-100 border-r border-gray-300 flex flex-col p-4">
+    <div className="w-48 bg-gray-100 border-gray-300 flex flex-col p-4 rounded-lg">
       <button
         onClick={() => setActiveSection('user')}
         className={`mb-4 p-2 text-left font-semibold rounded transition-colors ${

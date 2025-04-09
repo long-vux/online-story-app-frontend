@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FiEdit, FiTrash2  } from "react-icons/fi";
 
 const ChapterManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +24,7 @@ const ChapterManagement = () => {
   };
 
   return (
-    <div className="p-6 flex-1 relative">
+    <div className="p-6 pt-0 flex-1 relative">
       <h3 className="text-2xl font-semibold mb-4">Chapter Management</h3>
       <table className="w-full table-auto border-collapse">
         <thead>
@@ -31,18 +32,18 @@ const ChapterManagement = () => {
             <th className="p-2 border">Story ID</th>
             <th className="p-2 border">Số chương</th>
             <th className="p-2 border">Tiêu đề</th>
-            <th className="p-2 border">Hành động</th>
+            <th className="p-2 border">Actions</th>
           </tr>
         </thead>
         <tbody>
           {chapters.map((chapter) => (
             <tr key={chapter._id} className="hover:bg-gray-100">
-              <td className="p-2 border">{chapter.story_id}</td>
-              <td className="p-2 border">{chapter.chapter_number}</td>
-              <td className="p-2 border">{chapter.title}</td>
-              <td className="p-2 border">
-                <button className="bg-blue-500 text-white px-2 py-1 rounded mr-2">Sửa</button>
-                <button className="bg-red-500 text-white px-2 py-1 rounded">Xóa</button>
+              <td className="p-2 border text-center">{chapter.story_id}</td>
+              <td className="p-2 border text-center">{chapter.chapter_number}</td>
+              <td className="p-2 border text-center">{chapter.title}</td>
+              <td className="p-2 border text-center">
+                <button className="bg-blue-500 text-white px-2 py-2 rounded mr-2"><FiEdit /></button>
+                <button className="bg-red-500 text-white px-2 py-2 rounded"><FiTrash2 /></button>
               </td>
             </tr>
           ))}
