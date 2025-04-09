@@ -1,3 +1,6 @@
+import Story from "./Story.js";
+
+// Concrete Story Classes
 class ActionStory extends Story {
     constructor(data) {
         super(data);

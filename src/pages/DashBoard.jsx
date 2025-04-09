@@ -5,7 +5,7 @@ import ChapterManagement from '../components/admin/ChapterManagement';
 import PageManagement from '../components/admin/PageManagement';
 import UserManagement from '../components/admin/UserManagement';
 
-const App = () => {
+const Dashboard = ({ token }) => {
   const [activeSection, setActiveSection] = useState('user');
 
   return (
@@ -13,14 +13,14 @@ const App = () => {
       <div className='flex w-[70%] items-start'>
         <AdminNavbar setActiveSection={setActiveSection} activeSection={activeSection} />
         <div className="flex-1">
-          {activeSection === 'user' && <UserManagement />}
-          {activeSection === 'story' && <StoryManagement />}
-          {activeSection === 'chapter' && <ChapterManagement />}
-          {activeSection === 'page' && <PageManagement />}
+          {activeSection === 'user' && <UserManagement token={token} />}
+          {activeSection === 'story' && <StoryManagement token={token} />}
+          {activeSection === 'chapter' && <ChapterManagement token={token} />}
+          {activeSection === 'page' && <PageManagement token={token} />}
         </div>
       </div>
     </div>
   );
 };
 
-export default App;
+export default Dashboard;

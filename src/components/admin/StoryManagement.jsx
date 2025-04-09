@@ -1,27 +1,146 @@
-import React, { useState } from 'react';
-import { FiEdit, FiTrash2  } from "react-icons/fi";
+import React, { useEffect, useState } from 'react';
+import { FiEdit, FiTrash2 } from "react-icons/fi";
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import StoryFactory from '../../patterns/factory/StoryFactory'; // Import StoryFactory
 
-const StoryManagement = () => {
+const StoryManagement = ({token}) => {
+  const [stories, setStories] = useState([]);
+  const [categories, setCategories] = useState([]); // State để lưu danh sách categories
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditMode, setIsEditMode] = useState(false); // Để phân biệt giữa thêm và chỉnh sửa
+  const [currentStoryId, setCurrentStoryId] = useState(null); // Lưu ID của story đang chỉnh sửa
   const [newStory, setNewStory] = useState({
     title: '',
     description: '',
     author: '',
+    category_id: '', // Thêm category_id vào state
     status: 'ongoing',
   });
 
-  // Giả lập dữ liệu story
-  const stories = [
-    { _id: '1', title: 'Story 1', author: 'Author 1', status: 'ongoing', number_of_chapters: 5 },
-    { _id: '2', title: 'Story 2', author: 'Author 2', status: 'completed', number_of_chapters: 10 },
-  ];
+  const API_URL = process.env.REACT_APP_API_URL;
 
-  const handleAddStory = (e) => {
+  // Lấy danh sách stories và categories khi component mount
+  useEffect(() => {
+    fetchStories();
+    // fetchCategories();
+  }, []);
+
+  const fetchStories = async () => {
+    try {
+      const response = await axios.get(`${API_URL}stories/`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.status === 200) 
+        setStories(response.data);
+    } catch (error) {
+      console.error('Error fetching stories:', error);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/categories`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.status === 200) 
+        setCategories(response.data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  const handleAddStory = async (e) => {
     e.preventDefault();
-    // Logic để thêm story (gọi API)
-    console.log('Thêm story:', newStory);
-    setIsModalOpen(false);
-    setNewStory({ title: '', description: '', author: '', status: 'ongoing' });
+    try {
+      const response = await axios.post(`${API_URL}/stories`, newStory, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.status === 201) {
+        toast.success('Story added successfully');
+        fetchStories(); // Làm mới danh sách stories
+        setIsModalOpen(false);
+        setNewStory({ title: '', description: '', author: '', status: 'ongoing', category_id: '' });
+      } else {
+        toast.error('Failed to add story');
+      }
+    } catch (error) {
+      console.error('Error adding story:', error);
+      toast.error('Error adding story');
+    }
+  };
+
+  const handleEditStory = (story) => {
+    setIsEditMode(true);
+    setCurrentStoryId(story._id);
+    setNewStory({
+      title: story.title,
+      description: story.description,
+      author: story.author,
+      status: story.status,
+      category_id: story.category_id._id, // Lấy category_id từ story
+    });
+    setIsModalOpen(true);
+  };
+
+  const handleUpdateStory = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(`${API_URL}/stories/${currentStoryId}`, newStory, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (response.status === 200) {
+        toast.success('Story updated successfully');
+        fetchStories(); // Làm mới danh sách stories
+        setIsModalOpen(false);
+        setIsEditMode(false);
+        setNewStory({ title: '', description: '', author: '', status: 'ongoing', category_id: '' });
+      } else {
+        toast.error('Failed to update story');
+      }
+    } catch (error) {
+      console.error('Error updating story:', error);
+      toast.error('Error updating story');
+    }
+  };
+
+  const handleDeleteStory = async (storyId) => {
+    if (window.confirm('Are you sure you want to delete this story?')) {
+      try {
+        const response = await axios.delete(`${API_URL}/stories/${storyId}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (response.status === 200) {
+          toast.success('Story deleted successfully');
+          fetchStories(); // Làm mới danh sách stories
+        } else {
+          toast.error('Failed to delete story');
+        }
+      } catch (error) {
+        console.error('Error deleting story:', error);
+        toast.error('Error deleting story');
+      }
+    }
   };
 
   return (
@@ -32,6 +151,7 @@ const StoryManagement = () => {
           <tr className="bg-gray-200">
             <th className="p-2 border">Title</th>
             <th className="p-2 border">Authors</th>
+            <th className="p-2 border">Category</th>
             <th className="p-2 border">Status</th>
             <th className="p-2 border">Number of chapters</th>
             <th className="p-2 border">Actions</th>
@@ -42,11 +162,32 @@ const StoryManagement = () => {
             <tr key={story._id} className="hover:bg-gray-100">
               <td className="p-2 border text-center">{story.title}</td>
               <td className="p-2 border text-center">{story.author}</td>
-              <td className="p-2 border text-center">{story.status}</td>
-              <td className="p-2 border text-center">{story.number_of_chapters}</td>
+              <td className="p-2 border text-center">{story.category_id.name}</td>
               <td className="p-2 border text-center">
-                <button className="bg-blue-500 text-white px-2 py-2 rounded mr-2"><FiEdit /></button>
-                <button className="bg-red-500 text-white px-2 py-2 rounded"><FiTrash2 /></button>
+                <span
+                  className={`px-3 py-1 rounded-full text-sm font-medium 
+                    ${story.status === 'ongoing'
+                      ? 'bg-yellow-100 text-yellow-800'
+                      : 'bg-green-100 text-green-800'}
+                    `}
+                >
+                  {story.status}
+                </span>
+              </td>
+              <td className="p-2 border text-center">{story.number_of_chapters || 0}</td>
+              <td className="p-2 border text-center">
+                <button
+                  onClick={() => handleEditStory(story)}
+                  className="bg-blue-500 text-white px-2 py-2 rounded mr-2"
+                >
+                  <FiEdit />
+                </button>
+                <button
+                  onClick={() => handleDeleteStory(story._id)}
+                  className="bg-red-500 text-white px-2 py-2 rounded"
+                >
+                  <FiTrash2 />
+                </button>
               </td>
             </tr>
           ))}
@@ -55,7 +196,11 @@ const StoryManagement = () => {
 
       {/* Nút Thêm mới ở góc phải dưới */}
       <button
-        onClick={() => setIsModalOpen(true)}
+        onClick={() => {
+          setIsEditMode(false);
+          setNewStory({ title: '', description: '', author: '', status: 'ongoing', category_id: '' });
+          setIsModalOpen(true);
+        }}
         className="fixed bottom-6 right-6 bg-blue-500 text-white p-4 rounded-full hover:bg-blue-600"
       >
         +
@@ -65,10 +210,12 @@ const StoryManagement = () => {
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg w-96">
-            <h3 className="text-xl font-semibold mb-4">Thêm Story Mới</h3>
-            <form onSubmit={handleAddStory}>
+            <h3 className="text-xl font-semibold mb-4">
+              {isEditMode ? 'Edit Story' : 'Add New Story'}
+            </h3>
+            <form onSubmit={isEditMode ? handleUpdateStory : handleAddStory}>
               <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">Tiêu đề</label>
+                <label className="block text-sm font-medium mb-1">Title</label>
                 <input
                   type="text"
                   value={newStory.title}
@@ -78,7 +225,7 @@ const StoryManagement = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">Mô tả</label>
+                <label className="block text-sm font-medium mb-1">Description</label>
                 <textarea
                   value={newStory.description}
                   onChange={(e) => setNewStory({ ...newStory, description: e.target.value })}
@@ -86,7 +233,7 @@ const StoryManagement = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">Tác giả</label>
+                <label className="block text-sm font-medium mb-1">Author</label>
                 <input
                   type="text"
                   value={newStory.author}
@@ -96,7 +243,23 @@ const StoryManagement = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-sm font-medium mb-1">Trạng thái</label>
+                <label className="block text-sm font-medium mb-1">Category</label>
+                <select
+                  value={newStory.category_id}
+                  onChange={(e) => setNewStory({ ...newStory, category_id: e.target.value })}
+                  className="w-full p-2 border rounded"
+                  required
+                >
+                  <option value="">Select a category</option>
+                  {categories.map((category) => (
+                    <option key={category._id} value={category._id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-1">Status</label>
                 <select
                   value={newStory.status}
                   onChange={(e) => setNewStory({ ...newStory, status: e.target.value })}
@@ -112,10 +275,10 @@ const StoryManagement = () => {
                   onClick={() => setIsModalOpen(false)}
                   className="bg-gray-300 text-black px-4 py-2 rounded"
                 >
-                  Hủy
+                  Cancel
                 </button>
                 <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-                  Thêm
+                  {isEditMode ? 'Update' : 'Add'}
                 </button>
               </div>
             </form>
