@@ -42,7 +42,7 @@ const Overview = () => {
                         
                     </p>
                     <div className="mb-3">
-                        <span className="font-semibold">Category:</span>{" "}
+                        <span className="font-semibold">genre:</span>{" "}
                         <span className="text-orange-400">Action</span>
                     </div>
                     <div className="mb-3">

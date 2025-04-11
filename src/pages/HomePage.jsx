@@ -40,8 +40,8 @@ const mockMangas = [
   }
 ];
 
-const categories = [
-  "All category", "Shonen", "Shojo", "Seinen", "Josei", "Kodomomuke",
+const genres = [
+  "All genre", "Shonen", "Shojo", "Seinen", "Josei", "Kodomomuke",
   "One Shot", "Action", "Adventure", "Fantasy", "Dark Fantasy", 
   "Ecchi", "Romance", "Horror", "Parody", "Mistery"
 ];
@@ -60,16 +60,16 @@ const HomePage = () => {
           />
         </section>
 
-        {/* Hot Categories */}
+        {/* Hot genres */}
         <section className="mb-10">
-          <h2 className="text-xl font-semibold mb-4 text-pink-400">Categories</h2>
+          <h2 className="text-xl font-semibold mb-4 text-pink-400">genres</h2>
           <div className="flex flex-wrap gap-2">
-            {categories.map((category, idx) => (
+            {genres.map((genre, idx) => (
               <button
                 key={idx}
                 className="bg-yellow-500 hover:bg-yellow-400 text-black font-medium px-4 py-1 rounded-full text-sm transition-colors"
               >
-                {category}
+                {genre}
               </button>
             ))}
           </div>

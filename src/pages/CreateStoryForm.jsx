@@ -7,27 +7,27 @@ const CreateStoryForm = () => {
     title: '',
     description: '',
     author: '',
-    category_id: '',
+    genre_id: '',
     number_of_chapters: 0,
     latest_chapter: 0,
     status: 'ongoing',
     type: 'Action', // Mặc định là Action
   });
-  const [categories, setCategories] = useState([]);
+  const [genres, setgenres] = useState([]);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
-  // Lấy danh sách categories từ API (giả sử có endpoint /categories)
+  // Lấy danh sách genres từ API (giả sử có endpoint /genres)
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchgenres = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/categories');
-        setCategories(response.data);
+        const response = await axios.get('http://localhost:5000/api/genres');
+        setgenres(response.data);
       } catch (err) {
-        setError('Failed to load categories');
+        setError('Failed to load genres');
       }
     };
-    fetchCategories();
+    fetchgenres();
   }, []);
 
   const handleChange = (e) => {
@@ -61,7 +61,7 @@ const CreateStoryForm = () => {
         title: '',
         description: '',
         author: '',
-        category_id: '',
+        genre_id: '',
         number_of_chapters: 0,
         latest_chapter: 0,
         status: 'ongoing',
@@ -110,16 +110,16 @@ const CreateStoryForm = () => {
           />
         </div>
         <div className="mb-3">
-          <label>Category</label>
+          <label>genre</label>
           <select
-            name="category_id"
-            value={formData.category_id}
+            name="genre_id"
+            value={formData.genre_id}
             onChange={handleChange}
             className="form-control"
             required
           >
-            <option value="">Select category</option>
-            {categories.map((cat) => (
+            <option value="">Select genre</option>
+            {genres.map((cat) => (
               <option key={cat._id} value={cat._id}>
                 {cat.name}
               </option>

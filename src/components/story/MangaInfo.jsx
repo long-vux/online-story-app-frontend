@@ -1,6 +1,6 @@
 import React from "react";
 
-const MangaInfo = ({ title, author, stats, description, categories, readingStatus }) => {
+const MangaInfo = ({ title, author, stats, description, genres, readingStatus }) => {
   return (
     <div className="flex-1">
       <h1 className="text-3xl font-bold mb-2 text-white">{title}</h1>
@@ -21,14 +21,14 @@ const MangaInfo = ({ title, author, stats, description, categories, readingStatu
       </p>
       
       <div className="mb-6">
-        <h3 className="font-bold mb-2 text-white">Category</h3>
+        <h3 className="font-bold mb-2 text-white">genre</h3>
         <div className="flex flex-wrap gap-2">
-          {categories.map((category) => (
+          {genres.map((genre) => (
             <button 
-              key={category} 
+              key={genre} 
               className="px-3 py-1 bg-gray-700 rounded-full text-sm hover:bg-gray-600 text-gray-200"
             >
-              {category}
+              {genre}
             </button>
           ))}
         </div>
