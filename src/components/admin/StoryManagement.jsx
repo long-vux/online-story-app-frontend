@@ -3,7 +3,7 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const StoryManagement = ({token}) => {
+const StoryManagement = ({ token }) => {
   const [stories, setStories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false); // Để phân biệt giữa thêm và chỉnh sửa
@@ -12,9 +12,10 @@ const StoryManagement = ({token}) => {
     title: '',
     description: '',
     author: '',
-    genre: '', 
+    genre: '',
+    thumbnailFile: null,
     status: 'ongoing',
-    number_of_chapters: 0, 
+    number_of_chapters: 0,
   });
 
   const genreList = [
@@ -40,7 +41,7 @@ const StoryManagement = ({token}) => {
         }
       });
 
-      if (response.status === 200) 
+      if (response.status === 200)
         setStories(response.data);
     } catch (error) {
       console.error('Error fetching stories:', error);
@@ -50,18 +51,29 @@ const StoryManagement = ({token}) => {
   const handleAddStory = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${API_URL}stories`, newStory, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+      const formData = new FormData();
+      Object.entries(newStory).forEach(([key, value]) => {
+        if (key !== 'thumbnailFile') {
+          formData.append(key, value);
         }
       });
-
+      if (newStory.thumbnailFile) {
+        formData.append('thumbnail', newStory.thumbnailFile);
+      }
+  
+      const response = await axios.post(`${API_URL}stories`, formData, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+  
       if (response.status === 201) {
         toast.success('Story added successfully');
-        fetchStories(); // Làm mới danh sách stories
+        fetchStories();
         setIsModalOpen(false);
-        setNewStory({ title: '', description: '', author: '', status: 'ongoing', genre: '', number_of_chapters: 0 });
+        
+        setNewStory({ title: '', description: '', author: '', status: 'ongoing', genre: '', thumbnailFile: null, number_of_chapters: 0 });
       } else {
         toast.error('Failed to add story');
       }
@@ -70,6 +82,7 @@ const StoryManagement = ({token}) => {
       toast.error('Error adding story');
     }
   };
+  
 
   const handleEditStory = (story) => {
     setIsEditMode(true);
@@ -80,6 +93,7 @@ const StoryManagement = ({token}) => {
       author: story.author,
       status: story.status,
       genre: story.genre,
+      thumbnailFile: null,
       number_of_chapters: story.number_of_chapters
     });
     setIsModalOpen(true);
@@ -188,7 +202,7 @@ const StoryManagement = ({token}) => {
       <button
         onClick={() => {
           setIsEditMode(false);
-          setNewStory({ title: '', description: '', author: '', status: 'ongoing', genre: '', number_of_chapters: 0 });
+          setNewStory({ title: '', description: '', author: '', status: 'ongoing', genre: '', thumbnailFile: null, number_of_chapters: 0 });
           setIsModalOpen(true);
         }}
         className="fixed bottom-6 right-6 bg-blue-500 text-white p-4 rounded-full hover:bg-blue-600"
@@ -199,7 +213,7 @@ const StoryManagement = ({token}) => {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg w-96">
+          <div className="bg-white p-6 rounded-lg w-96 ">
             <h3 className="text-xl font-semibold mb-4">
               {isEditMode ? 'Edit Story' : 'Add New Story'}
             </h3>
@@ -253,7 +267,7 @@ const StoryManagement = ({token}) => {
                 <input
                   type="number"
                   value={newStory.number_of_chapters}
-                  onChange={(e) => setNewStory({...newStory, number_of_chapters: e.target.value })}
+                  onChange={(e) => setNewStory({ ...newStory, number_of_chapters: e.target.value })}
                   className="w-full p-2 border rounded"
                   required
                 />
@@ -269,6 +283,18 @@ const StoryManagement = ({token}) => {
                   <option value="completed">Completed</option>
                 </select>
               </div>
+              {!isEditMode && <div className="mb-4">
+                <label className="block text-sm font-medium mb-1">Thumbnail</label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) =>
+                    setNewStory({ ...newStory, thumbnailFile: e.target.files[0] })
+                  }                  
+                  className="w-full p-2 border rounded"
+                />
+              </div>}
+
               <div className="flex justify-end space-x-2">
                 <button
                   type="button"
@@ -281,6 +307,8 @@ const StoryManagement = ({token}) => {
                   {isEditMode ? 'Update' : 'Add'}
                 </button>
               </div>
+
+
             </form>
           </div>
         </div>
