@@ -33,7 +33,6 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isLoggedIn = localStorage.getItem("user");
-  console.log(isLoggedIn);
   let isAdmin = false;
 
   const [activeItem, setActiveItem] = useState("Home");
@@ -41,7 +40,6 @@ const Navbar = () => {
   if (isLoggedIn) {
    const user = jwtDecode(isLoggedIn);
    isAdmin = user.role === "Admin"; 
-   console.log('user',user);
   }
 
   // 🔁 Update activeItem mỗi khi đường dẫn thay đổi

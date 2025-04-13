@@ -19,12 +19,9 @@ const MainRoutes = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
-      {/* Header */}
       {!hideLayout && <Header />}
 
-      {/* Layout chính */}
       <div className="flex flex-1">
-        {/* Sidebar (Navbar) bên trái */}
         {!hideLayout && (
           <Navbar setActiveSection={setActiveSection} activeSection={activeSection} />
         )}
@@ -32,8 +29,8 @@ const MainRoutes = () => {
         {/* Nội dung chính (các route) */}
         <div className="flex-1">
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/" element={<HomePage  />} />
+            <Route path="/profile" element={<Profile/>} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/notifications" element={<Notification />} />
