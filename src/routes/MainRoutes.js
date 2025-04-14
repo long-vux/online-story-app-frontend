@@ -34,7 +34,7 @@ const MainRoutes = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/notifications" element={<Notification />} />
-            <Route path="/story-detail" element={<StoryDetail />} />
+            <Route path="/story-detail/:storyId" element={<StoryDetail />} />
             <Route path="/chapter-item" element={<ChapterItem />} />
           </Routes>
         </div>

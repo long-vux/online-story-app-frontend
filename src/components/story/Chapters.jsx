@@ -1,19 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from '../layout/Navbar';
 import { useNavigate } from "react-router-dom";
 import messageIcon from "../../assets/message.svg";
 import downloadIcon from "../../assets/download.svg";
 import eyeicon from "../../assets/eye.svg";
+import axios from "axios";
 
-const ChaptersPage = () => {
+const ChaptersPage = ({storyId}) => {
     const navigator = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
+    const [chapters, setChapters] = useState([]);
 
-    const chapters = Array.from({ length: 50 }, (_, i) => ({
-        number: 1069 - i,
-        date: `2023-${10 - Math.floor(i / 5)}-${15 - (i % 15)}`,
-        views: (10000 - i * 200).toLocaleString()
-    }));
+    const API_URL = process.env.REACT_APP_API_URL;
+
+    useEffect(() => {
+        const fetchChapters = async () => {
+            const apiUrl = API_URL + 'stories/' + storyId + '/chapters';
+            try {
+                const response = await axios.get(apiUrl);
+                setChapters(response.data);  
+                console.log(response.data);
+            } catch (error) {
+                console.error('Error fetching story detail:', error);
+            }
+        } 
+        fetchChapters();
+    }, [])
+
+    // const chapters = Array.from({ length: 50 }, (_, i) => ({
+    //     number: 1069 - i,
+    //     date: `2023-${10 - Math.floor(i / 5)}-${15 - (i % 15)}`,
+    //     views: (10000 - i * 200).toLocaleString()
+    // }));
 
     const totalPages = Math.ceil(chapters.length / 10);
 
@@ -30,7 +48,7 @@ const ChaptersPage = () => {
                         <thead className="bg-gray-700">
                             <tr>
                                 <th className="px-6 py-4 text-left font-bold text-gray-300 uppercase tracking-wider">Chapter</th>
-                                <th className="px-6 py-4 text-left font-bold text-gray-300 uppercase tracking-wider">Date</th>
+                                <th className="px-6 py-4 text-left font-bold text-gray-300 uppercase tracking-wider">Date Update</th>
                                 <th className="px-6 py-4 text-left font-bold text-gray-300 uppercase tracking-wider">Views</th>
                                 <th className="px-6 py-4 text-left font-bold text-gray-300 uppercase tracking-wider">Actions</th>
                             </tr>
@@ -39,13 +57,13 @@ const ChaptersPage = () => {
                             {chapters.slice((currentPage - 1) * 10, currentPage * 10).map((chapter, index) => (
                                 <tr key={index} className="hover:bg-gray-700 transition-colors">
                                     <td className="px-6 py-2 whitespace-nowrap font-semibold text-white">
-                                        Chapter {chapter.number}
+                                        Chapter {chapter.chapter_number}
                                     </td>
                                     <td className="px-6 py-2 whitespace-nowrap text-gray-300">
-                                        {chapter.date}
+                                        {chapter.updatedAt.split('T')[0]}
                                     </td>
                                     <td className="px-6 py-2 whitespace-nowrap text-gray-300">
-                                        {chapter.views}
+                                        {chapter.views || 0}
                                     </td>
                                     <td className="px-6 py-2 whitespace-nowrap">
                                         <div className="flex space-x-4">

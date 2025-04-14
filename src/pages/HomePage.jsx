@@ -1,53 +1,38 @@
-import React from "react";
-import Navbar from "../components/layout/Navbar";
+import React, { useEffect, useState } from "react";
 import StoryCard from "../components/story/StoryCard";
-
-const mockMangas = [
-  { 
-    img: "one-piece-cover.jpg", 
-    title: "One Piece", 
-    author: "Eiichiro Oda", 
-    chapter: "Chapter 1033", 
-    rating: "9.36" 
-  },
-  { 
-    img: "solo-leveling.jpg", 
-    title: "Solo Leveling", 
-    author: "Jung Rok", 
-    chapter: "Chapter 124", 
-    rating: "9.15" 
-  },
-  { 
-    img: "versatile-mage.jpg", 
-    title: "Versatile Mage", 
-    author: "Chaos", 
-    chapter: "Chapter 155", 
-    rating: "9.78" 
-  },
-  { 
-    img: "berserk.jpg", 
-    title: "Berserk", 
-    author: "Kentaro Miura", 
-    chapter: "Chapter 360", 
-    rating: "9.22" 
-  },
-  { 
-    img: "beginning-after-end.jpg", 
-    title: "The Beginning After the End", 
-    author: "TurtleMe", 
-    chapter: "Chapter 122", 
-    rating: "9.05" 
-  }
-];
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const categories = [
-  "All category", "Shonen", "Shojo", "Seinen", "Josei", "Kodomomuke",
-  "One Shot", "Action", "Adventure", "Fantasy", "Dark Fantasy", 
-  "Ecchi", "Romance", "Horror", "Parody", "Mistery"
+  "Action", 
+  "Romance",
+  "Detective",
+  "Horror"
 ];
 
+const API_URL = process.env.REACT_APP_API_URL;
 
 const HomePage = () => {
+  const [stories, setStories] = useState([]);
+  const [error, setError] = useState(null);
+
+  const fetchStories = async () => {
+    try {
+      const res = await axios.get(`${API_URL}stories`);
+      if (res.status === 200) {
+        setStories(res.data);
+      }
+    } catch (error) {
+      console.error("Error fetching stories:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchStories();
+  }, []);
+
+
+
   return (
       <div className="flex-1 bg-gray-900 text-white p-6">
         {/* Out now */}
@@ -79,8 +64,8 @@ const HomePage = () => {
         <section className="mb-10">
           <h2 className="text-xl font-semibold mb-4">Popular this month</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {mockMangas.map((manga, idx) => (
-              <StoryCard key={idx} manga={manga} />
+            {stories.map((story, idx) => (
+              <StoryCard key={idx} story={story} />
             ))}
           </div>
         </section>
@@ -89,11 +74,11 @@ const HomePage = () => {
         <section>
           <h2 className="text-xl font-semibold mb-4">🆕 Recent Uploads</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {mockMangas
+            {stories
               .slice()
               .reverse()
-              .map((manga, idx) => (
-                <StoryCard key={idx} manga={manga} />
+              .map((story, idx) => (
+                <StoryCard key={idx} story={story} />
               ))}
           </div>
         </section>

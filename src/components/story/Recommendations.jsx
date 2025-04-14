@@ -1,44 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import StoryCard from "./StoryCard";
+import axios from "axios";
 
-const Recommendations = () => {
-  const recommendedManga = [
-    { 
-      img: "one-piece-cover.jpg", 
-      title: "One Piece", 
-      author: "Eiichiro Oda", 
-      chapter: "Chapter 1033", 
-      rating: "9.36" 
-    },
-    { 
-      img: "solo-leveling.jpg", 
-      title: "Solo Leveling", 
-      author: "Jung Rok", 
-      chapter: "Chapter 124", 
-      rating: "9.15" 
-    },
-    { 
-      img: "versatile-mage.jpg", 
-      title: "Versatile Mage", 
-      author: "Chaos", 
-      chapter: "Chapter 155", 
-      rating: "9.78" 
-    },
-    { 
-      img: "berserk.jpg", 
-      title: "Berserk", 
-      author: "Kentaro Miura", 
-      chapter: "Chapter 360", 
-      rating: "9.22" 
-    },
-    { 
-      img: "beginning-after-end.jpg", 
-      title: "The Beginning After the End", 
-      author: "TurtleMe", 
-      chapter: "Chapter 122", 
-      rating: "9.05" 
-    }
-  ];
+const Recommendations = ({genre}) => {
+
+  const ROOT_URL = process.env.REACT_APP_ROOT_URL;
+  const API_URL = process.env.REACT_APP_API_URL;
+  const [stories, setStories] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchStoriesFromGenre = async () => {
+      try {
+        const response = await axios.get(API_URL + 'genres/' + genre + '/stories');
+        setStories(response.data);
+      } catch (error) {
+        setError(error);
+      }
+    };
+
+    fetchStoriesFromGenre();
+  }, []);
 
   return (
     <div>
@@ -46,8 +28,8 @@ const Recommendations = () => {
         If you like this manga, you might like
       </p>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        {recommendedManga.map((manga, index) => (
-          <StoryCard key={index} manga={manga} />
+        {stories.map((story, index) => (
+          <StoryCard key={index} story={story} />
         ))}
       </div>
     </div>
