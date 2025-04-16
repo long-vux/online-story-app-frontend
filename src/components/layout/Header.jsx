@@ -5,14 +5,23 @@ import userIcon from "../../assets/user-icon.png";
 import { useNavigate } from "react-router-dom";
 
 // Header componen
-const Header = () => {
+const Header = ({ themeMode, toggleThemeMode }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center justify-between w-full h-16 bg-gray-100 border-b-2 border-gray-800 px-8 sticky top-0 z-10 ">
+    <div className={`flex items-center justify-between w-full h-16 bg-gray-100 border-b-2 border-gray-800 px-8 sticky top-0 z-10 ${
+      themeMode === "night" ? "opacity-50" : ""
+    }`}>
       <button onClick={() => navigate("/")}>
         <img src={logo} alt="Yuki Logo" className="ml-2 h-10" />
       </button>
+
+      <button
+          onClick={toggleThemeMode}
+          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+        >
+          Switch to {themeMode === "day" ? "Night" : "Day"} Mode
+        </button>
 
       <input
         type="text"

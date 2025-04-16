@@ -1,13 +1,22 @@
-import IReadingStrategy from "./IReadingStrategy";
-
 const ROOT_URL = process.env.REACT_APP_ROOT_URL;
 
+// Lớp trừu tượng cho chiến lược đọc
+class ReadingStrategy {
+  renderContent(pages, currentPage, themeClasses) {
+    throw new Error("renderContent must be implemented by subclass");
+  }
+
+  handleNavigation(direction, setCurrentPage, totalPages) {
+    throw new Error("handleNavigation must be implemented by subclass");
+  }
+}
+
 // Chiến lược: Lật trang (Page Flip)
-class PageFlipStrategy extends IReadingStrategy {
-    renderContent(pages, currentPage) {
+class PageFlipStrategy extends ReadingStrategy {
+    renderContent(pages, currentPage, contentClasses) {
       console.log('current flip page', currentPage)
       return (
-        <div className="w-full h-[500px] bg-white shadow-lg rounded-lg p-6 overflow-hidden">
+        <div className={`w-full h-[500px] bg-white shadow-lg rounded-lg p-6 overflow-hidden ${contentClasses}`}>
           <img
             src={`${ROOT_URL}${pages[currentPage]?.image_url}`}
             alt={`Page ${currentPage + 1}`}
@@ -27,10 +36,10 @@ class PageFlipStrategy extends IReadingStrategy {
   }
 
 // Chiến lược: Cuộn trang (Scroll)
-class ScrollStrategy extends IReadingStrategy {
-  renderContent(pages) {
+class ScrollStrategy extends ReadingStrategy {
+  renderContent(pages, contentClasses) {
     return (
-      <div className="w-full max-h-[600px] bg-white shadow-lg rounded-lg p-6 overflow-y-auto">
+      <div className={`w-full max-h-[600px] shadow-lg rounded-lg p-6 overflow-y-auto ${contentClasses}`}>
         {pages.map((page, index) => (
           <div key={index} className="mb-4 border-b pb-4">
             <img
