@@ -5,10 +5,11 @@ import Notification from '../pages/Notification';
 import StoryDetail from '../pages/StoryDetail';
 import Header from '../components/layout/Header';
 import HomePage from '../pages/HomePage';
-import ChapterItem from '../pages/ChapterItem';
+// import ChapterItem from '../pages/ChapterItem';
 import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
 import Profile from '../pages/Profile';
+import ReadingView from '../components/reader/ReadingView';
 
 const MainRoutes = () => {
   const [activeSection, setActiveSection] = useState('story');
@@ -35,7 +36,10 @@ const MainRoutes = () => {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/notifications" element={<Notification />} />
             <Route path="/story-detail/:storyId" element={<StoryDetail />} />
-            <Route path="/chapter-item" element={<ChapterItem />} />
+            {/* <Route path="/chapter-item" element={<ChapterItem />} /> */}
+            <Route path="/reading-view/:chapterId" element={<ReadingView />} />
+            <Route path="*" element={<div>Page not found</div>} />
+
           </Routes>
         </div>
       </div>

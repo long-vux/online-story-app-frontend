@@ -3,7 +3,6 @@ import Navibar from "../components/layout/Navbar";
 import ChaptersModal from "./ChaptersModal";
 
 const ChapterItem = () => {
-  const [input1, onChangeInput1] = useState('');
   const [activeTab, setActiveTab] = useState("Overview");
   const [currentPage, setCurrentPage] = useState(1);
   const [showChaptersModal, setShowChaptersModal] = useState(false);

@@ -7,6 +7,8 @@ const StoryCard = ({ story }) => {
 
   const handleClick = () => {
     navigate(`/story-detail/${story._id}`);
+    // reload
+    window.location.reload();
   };
   
   return (

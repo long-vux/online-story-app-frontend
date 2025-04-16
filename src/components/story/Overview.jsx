@@ -1,10 +1,14 @@
 import { React, useState } from 'react';
-import onePieceCover from "../../assets/one-piece-cover.jpg";
 import Comment from "./Comment";
 import Rating from "./Rating";
 
-const Overview = ({ story }) => {
+const Overview = ({ story, setActiveTab }) => {
     const ROOT_URL = process.env.REACT_APP_ROOT_URL;
+
+    const handleReading = () => {
+        setActiveTab("Chapters");
+    };
+
     return (
         <>
             <div className="grid md:grid-cols-2 my-10 ">
@@ -47,7 +51,7 @@ const Overview = ({ story }) => {
                     <div className="mb-6">
                         <span className="font-semibold">Your progress chapter:</span> 10
                     </div>
-                    <button className="bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-6 rounded-full transition">
+                    <button className="bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-6 rounded-full transition" onClick={handleReading}>
                         Continue Reading
                     </button>
                 </div>

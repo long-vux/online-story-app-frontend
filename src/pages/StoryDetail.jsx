@@ -40,7 +40,7 @@ const StoryDetail = () => {
           />
 
           {/* Hiển thị nội dung theo tab */}
-          {activeTab === "Overview" && <Overview story={story} />}
+          {activeTab === "Overview" && <Overview story={story} setActiveTab={setActiveTab} />}
           {activeTab === "Chapters" && (
             <div className="flex justify-center items-center">
               <Chapters storyId={story._id} />
