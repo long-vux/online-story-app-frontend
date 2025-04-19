@@ -1,13 +1,41 @@
-import { React, useState } from 'react';
+import { React } from 'react';
 import Comment from "./Comment";
 import Rating from "./Rating";
+import axios from "axios";
+const { jwtDecode } = require("jwt-decode");
 
+// Overview component to display story details and rating for
 const Overview = ({ story, setActiveTab }) => {
     const ROOT_URL = process.env.REACT_APP_ROOT_URL;
+    const API_URL = process.env.REACT_APP_API_URL;
+
+
+    const token = JSON.parse(localStorage.getItem("user"));
+    const userId = jwtDecode(token).userId;
 
     const handleReading = () => {
         setActiveTab("Chapters");
     };
+
+    const handleAddRating = async (rating) => {
+        try {
+            const response = await axios.post(API_URL + 'stories/' + story._id + '/rate',
+
+                {
+                    rating: rating,
+                },
+                {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+            console.log(
+                'response.data',
+                response.data,
+            )
+        } catch (error) {
+            console.error('Error adding rating:', error);
+        }
+    };
+
 
     return (
         <>
@@ -37,8 +65,10 @@ const Overview = ({ story, setActiveTab }) => {
                         <span className={`text-2xl text-yellow-400 mr-2`}>
                             ★
                         </span>
-                        {story.rating || 5} |
-                        <span className={`text-gray-400`}> {story.numberOfRating || 100} ratings</span>
+                        {story.averageRating || 5} |&nbsp;
+                        <span className={`text-gray-400`}>
+                            {story.ratings.length} {story.ratings.length < 2 ? 'rating' : 'ratings'}
+                        </span>
 
                     </p>
                     <div className="mb-3">
@@ -46,7 +76,7 @@ const Overview = ({ story, setActiveTab }) => {
                         <span className="text-orange-400">{story.genre}</span>
                     </div>
                     <div className="mb-3">
-                        <span className="font-semibold">Latest Chapter: {story.latest_chapter}</span> 
+                        <span className="font-semibold">Latest Chapter: {story.latest_chapter}</span>
                     </div>
                     <div className="mb-6">
                         <span className="font-semibold">Your progress chapter:</span> 10
@@ -58,7 +88,7 @@ const Overview = ({ story, setActiveTab }) => {
             </div>
 
             {/* rating section */}
-            <Rating />
+            <Rating story={story} currentUserId={userId} callBackAddRating={handleAddRating} />
 
             {/* comment section */}
             <Comment />

@@ -1,27 +1,47 @@
 import React, { useState } from "react";
 
-const Rating = () => {
+const Rating = ({ story, currentUserId, callBackAddRating }) => {
   const [hoveredStar, setHoveredStar] = useState(null);
   const [selectedStar, setSelectedStar] = useState(null);
-  const [finalRating, setFinalRating] = useState(null);
   const [canAddRating, setCanAddRating] = useState(false);
 
+  // Kiểm tra xem người dùng đã đánh giá chưa
+  const hasRated = story.ratings.some(
+    (rating) => rating.userId._id === currentUserId
+  );
+
+  // Tìm rating của người dùng hiện tại
+  const userRating = story.ratings.find(
+    (rating) => rating.userId._id === currentUserId
+  )?.rating;
+
   const handleMouseEnter = (index) => {
-    if (!finalRating) setHoveredStar(index);
+    if (!hasRated) {
+      setHoveredStar(index);
+    }
   };
 
   const handleMouseLeave = () => {
-    if (!finalRating) setHoveredStar(null);
+    if (!hasRated) {
+      setHoveredStar(null);
+    }
   };
 
   const handleClick = (index) => {
-    setSelectedStar(index);
-    setCanAddRating(true);
+    if (!hasRated) {
+      setSelectedStar(index);
+      setCanAddRating(true);
+    }
   };
 
   const handleAddRating = () => {
-    setFinalRating(selectedStar);
-    setCanAddRating(false);
+    if (!hasRated && selectedStar) {
+      callBackAddRating(selectedStar); // Gửi rating lên server
+      setCanAddRating(false);
+      setSelectedStar(null); // Reset sau khi gửi
+      // reload
+      window.location.reload();
+    }
   };
 
   return (
@@ -32,15 +52,15 @@ const Rating = () => {
         {[...Array(5)].map((_, idx) => {
           const starIndex = idx + 1;
           const isFilled =
-            finalRating >= starIndex ||
-            (!finalRating && (hoveredStar || selectedStar) >= starIndex);
+            (hasRated && userRating >= starIndex) ||
+            (!hasRated && (hoveredStar || selectedStar) >= starIndex);
 
           return (
             <span
               key={idx}
-              className={`text-3xl cursor-pointer transition-colors duration-150 ${
+              className={`text-3xl transition-colors duration-150 ${
                 isFilled ? "text-yellow-400" : "text-gray-600"
-              }`}
+              } ${hasRated ? "cursor-not-allowed" : "cursor-pointer"}`}
               onMouseEnter={() => handleMouseEnter(starIndex)}
               onMouseLeave={handleMouseLeave}
               onClick={() => handleClick(starIndex)}
@@ -50,8 +70,10 @@ const Rating = () => {
           );
         })}
 
-        {finalRating ? (
-          <span className="text-lg font-semibold">{finalRating} / 5</span>
+        {hasRated ? (
+          <span className="text-lg font-semibold ml-2">
+            Your rating: {userRating} / 5
+          </span>
         ) : canAddRating ? (
           <button
             onClick={handleAddRating}
