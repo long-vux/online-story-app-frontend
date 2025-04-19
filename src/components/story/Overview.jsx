@@ -1,13 +1,14 @@
-import { React } from 'react';
+import { React, useState } from 'react';
 import Comment from "./Comment";
 import Rating from "./Rating";
 import axios from "axios";
 const { jwtDecode } = require("jwt-decode");
 
 // Overview component to display story details and rating for
-const Overview = ({ story, setActiveTab }) => {
+const Overview = ({ story: initialStory, setActiveTab }) => {
     const ROOT_URL = process.env.REACT_APP_ROOT_URL;
     const API_URL = process.env.REACT_APP_API_URL;
+    const [story, setStory] = useState(initialStory); // dùng state để update UI
 
 
     const token = JSON.parse(localStorage.getItem("user"));
@@ -19,22 +20,27 @@ const Overview = ({ story, setActiveTab }) => {
 
     const handleAddRating = async (rating) => {
         try {
-            const response = await axios.post(API_URL + 'stories/' + story._id + '/rate',
+            const response = await axios.post(
+                `${API_URL}stories/${story._id}/rate`,
+                { rating },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
 
-                {
-                    rating: rating,
-                },
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-            console.log(
-                'response.data',
-                response.data,
-            )
+            // Giả sử API trả về story mới (cập nhật average + ratings array)
+            const updatedStory = response.data.story || {
+                ...story,
+                ratings: [...story.ratings, { userId: { _id: userId }, rating }],
+            };
+
+            setStory(updatedStory); // cập nhật lại để UI render lại
+
+            return true; // báo cho child biết thành công
         } catch (error) {
-            console.error('Error adding rating:', error);
+            console.error("Error adding rating:", error);
+            return false;
         }
     };
+
 
 
     return (
@@ -91,7 +97,7 @@ const Overview = ({ story, setActiveTab }) => {
             <Rating story={story} currentUserId={userId} callBackAddRating={handleAddRating} />
 
             {/* comment section */}
-            <Comment />
+            <Comment story={story} currentUserId={userId} />
         </>
     );
 };

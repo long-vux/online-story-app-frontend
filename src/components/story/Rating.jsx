@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { toast } from 'react-toastify';
 const Rating = ({ story, currentUserId, callBackAddRating }) => {
   const [hoveredStar, setHoveredStar] = useState(null);
   const [selectedStar, setSelectedStar] = useState(null);
@@ -34,15 +34,22 @@ const Rating = ({ story, currentUserId, callBackAddRating }) => {
     }
   };
 
-  const handleAddRating = () => {
+  const handleAddRating = async () => {
     if (!hasRated && selectedStar) {
-      callBackAddRating(selectedStar); // Gửi rating lên server
-      setCanAddRating(false);
-      setSelectedStar(null); // Reset sau khi gửi
-      // reload
-      window.location.reload();
+      try {
+        const success = await callBackAddRating(selectedStar); // Gửi lên server
+        if (success) {
+          toast.success("Rating added successfully");
+          setCanAddRating(false);
+          setSelectedStar(null);
+          // Có thể update trực tiếp UI hoặc gọi hàm fetch lại story từ props cha
+        }
+      } catch (err) {
+        toast.error("Failed to add rating");
+      }
     }
   };
+
 
   return (
     <div className="bg-[#121212] p-6 rounded-lg shadow mt-[100px] text-white">
@@ -58,9 +65,8 @@ const Rating = ({ story, currentUserId, callBackAddRating }) => {
           return (
             <span
               key={idx}
-              className={`text-3xl transition-colors duration-150 ${
-                isFilled ? "text-yellow-400" : "text-gray-600"
-              } ${hasRated ? "cursor-not-allowed" : "cursor-pointer"}`}
+              className={`text-3xl transition-colors duration-150 ${isFilled ? "text-yellow-400" : "text-gray-600"
+                } ${hasRated ? "cursor-not-allowed" : "cursor-pointer"}`}
               onMouseEnter={() => handleMouseEnter(starIndex)}
               onMouseLeave={handleMouseLeave}
               onClick={() => handleClick(starIndex)}
