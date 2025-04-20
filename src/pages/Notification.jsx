@@ -25,6 +25,17 @@ const Notification = () => {
     fetchNotifications();
   }, []);
 
+  const markAllAsRead = async () => {
+    try {
+      await axios.patch(`${API_URL}notifications/read-all`);
+      setNotifications((prev) =>
+        prev.map((noti) => ({ ...noti, isRead: true }))
+      );
+    } catch (err) {
+      console.error('Lỗi khi đánh dấu tất cả thông báo:', err);
+    }
+  };
+
   // Tính tổng số trang
   const totalPages = Math.ceil(notifications.length / itemsPerPage);
 
@@ -70,6 +81,13 @@ const Notification = () => {
               </div>
             ))}
           </div>
+
+          <button
+            onClick={markAllAsRead}
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+          >
+            Đánh dấu tất cả là đã đọc
+          </button>
 
           {/* Pagination */}
           <div className="flex justify-center items-center gap-4">

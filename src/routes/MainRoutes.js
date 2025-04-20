@@ -11,8 +11,8 @@ import Profile from '../pages/Profile';
 import ReadingView from '../components/reader/ReadingView';
 import { DayModeStrategy, NightModeStrategy } from '../components/reader/DayNightStrategies';
 import { motion, AnimatePresence } from 'framer-motion';
-import socket from '../socket';
 import { toast } from 'react-toastify';
+import socket from '../socket';
 
 const MainRoutes = () => {
   const [themeMode, setThemeMode] = useState(localStorage.getItem("themeMode") || "day");
@@ -35,18 +35,34 @@ const MainRoutes = () => {
 
   const hideLayout = ['/login', '/register'].includes(location.pathname);
 
-  // 👂 Nghe socket và hiển thị toast nếu đang ở trang /notifications
   useEffect(() => {
+    // Lấy userId từ localStorage hoặc JWT decode
+    const token = localStorage.getItem("user");
+    const userId = token ? JSON.parse(atob(token.split('.')[1])).userId : null;
+
+    if (userId) {
+      // Gửi userId để join room
+      socket.emit('subscribe', userId);
+      console.log(`User ${userId} joined their room`);
+    }
+
     const handleNewNoti = (data) => {
-      if (location.pathname === '/notifications') {
-        // toast.success(data.message);
-        setRealtimeNoti(data.message);
-        setTimeout(() => setRealtimeNoti(null), 4000);
-      }
+      setRealtimeNoti(data.message);
+      toast.success(data.message);
+      console.log(`📢 Notify user ${userId} about new chapteadfdsr:`, data);
+      setTimeout(() => {
+        setRealtimeNoti(null);
+      }, 4000);
     };
 
+    // Lắng nghe sự kiện new-chapter
     socket.on('new-chapter', handleNewNoti);
-    return () => socket.off('new-chapter', handleNewNoti);
+
+    console.log('Listening for new-chapter events'); // Log khi bắt đầu lắng nghe
+    return () => {
+      console.log('Stopped listening for new-chapter events'); // Log khi cleanup
+      socket.off('new-chapter', handleNewNoti);
+    };
   }, [location.pathname]);
 
   return (
