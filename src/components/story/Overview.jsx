@@ -37,12 +37,12 @@ const Overview = ({ story: initialStory, setActiveTab }) => {
         try {
             if (isSubscribed) {
                 // Hủy subscribe
-                await axios.delete(`${API_URL}user/${story._id}/unsubscribe`,{
+                await axios.delete(`${API_URL}stories/${story._id}/unsubscribe`,{
                     headers: { Authorization: `Bearer ${token}` }
                 });
             } else {
                 // Thêm subscriber
-                await axios.post(`${API_URL}user/${story._id}/subscribe`, {}, {
+                await axios.post(`${API_URL}stories/${story._id}/subscribe`, {}, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
             }
