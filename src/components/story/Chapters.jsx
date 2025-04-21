@@ -4,15 +4,18 @@ import messageIcon from "../../assets/message.svg";
 import downloadIcon from "../../assets/download.svg";
 import eyeicon from "../../assets/eye.svg";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const ChaptersPage = ({storyId}) => {
     const navigate = useNavigate();
-    const [pages, setPages] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [chapters, setChapters] = useState([]);
     
 
     const API_URL = process.env.REACT_APP_API_URL;
+    const token = JSON.parse(localStorage.getItem("user"));
+    const userId = jwtDecode(token).userId;
+
 
     useEffect(() => {
         const fetchChapters = async () => {
@@ -28,20 +31,25 @@ const ChaptersPage = ({storyId}) => {
         fetchChapters();
     }, [])
 
-    // fetch pages by chapter
-    // const fetchPagesByChapter = async (chapterId) => {
-    //     const apiUrl = API_URL +'chapter-image/' + chapterId;
-    //     try {
-    //         const response = await axios.get(apiUrl);
-    //         setPages(response.data);
-    //         console.log(response.data);
-    //     } catch (error) {
-    //         console.error('Error fetching story detail:', error);
-    //     }
-    // }
-
     const handleOpenPage = async (chapterId) => {
-        navigate(`/reading-view/${chapterId}`);
+        // gọi API update progress (chapter đã đọc)
+        const apiUrl = `${API_URL}progress`;
+        try {
+            const response = await axios.post(apiUrl, {
+                userId: userId,
+                storyId: storyId,
+                chapterId: chapterId,
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            console.log('response.data',response.data);
+            // Chuyển hướng đến trang đọc
+            navigate(`/reading-view/${chapterId}`);
+        } catch (error) {
+            console.error('Error fetching story detail:', error);
+        }
+        // chuyển sang trang mới
+            
     }
 
     const totalPages = Math.ceil(chapters.length / 10);

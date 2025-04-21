@@ -3,7 +3,8 @@ import Comment from "./Comment";
 import Rating from "./Rating";
 import axios from "axios";
 import { toast } from 'react-toastify';
-const { jwtDecode } = require("jwt-decode");
+import { useNavigate } from "react-router-dom"; // Sửa import để không dùng require
+import {jwtDecode} from "jwt-decode";
 
 const Overview = ({ story: initialStory, setActiveTab }) => {
     const ROOT_URL = process.env.REACT_APP_ROOT_URL;
@@ -11,7 +12,8 @@ const Overview = ({ story: initialStory, setActiveTab }) => {
     const [story, setStory] = useState(initialStory);
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
+    const [progress, setProgress] = useState(null); // Store the progress object
+    const navigate = useNavigate(); // Đảm bảo useNavigate được sử dụng trong ngữ cảnh <Router>
     const token = JSON.parse(localStorage.getItem("user"));
     const userId = jwtDecode(token).userId;
 
@@ -32,12 +34,30 @@ const Overview = ({ story: initialStory, setActiveTab }) => {
     }, [story._id, token]);  // Đảm bảo kiểm tra lại khi `story` thay đổi
 
 
+    // fetch progress chapter
+    useEffect(() => {
+        const fetchProgress = async () => {
+            const apiUrl = `${API_URL}progress/${userId}/${story._id}`;
+            console.log("Fetching progress from:", apiUrl);
+            try {
+                const response = await axios.get(apiUrl, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setProgress(response.data.progress); // Store the entire progress object
+            } catch (error) {
+                console.error("Error fetching progress:", error);
+            }
+        };
+        fetchProgress();
+    }, [userId, story._id, token]);
+
+
     const toggleSubscribe = async () => {
         setIsLoading(true);
         try {
             if (isSubscribed) {
                 // Hủy subscribe
-                await axios.delete(`${API_URL}stories/${story._id}/unsubscribe`,{
+                await axios.delete(`${API_URL}stories/${story._id}/unsubscribe`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
             } else {
@@ -55,11 +75,13 @@ const Overview = ({ story: initialStory, setActiveTab }) => {
             setIsLoading(false);
         }
     };
-
-
-
+    
     const handleReading = () => {
-        setActiveTab("Chapters");
+        if (progress?.chapterId) {
+            navigate(`/reading-view/${progress.chapterId._id}`); // Use the chapterId's _id for navigation
+        } else {
+            setActiveTab("Chapters");
+        }
     };
 
     const handleAddRating = async (rating) => {
@@ -147,13 +169,13 @@ const Overview = ({ story: initialStory, setActiveTab }) => {
                         <span className="font-semibold">Latest Chapter: {story.latest_chapter}</span>
                     </div>
                     <div className="mb-6">
-                        <span className="font-semibold">Your progress chapter:</span> 10
+                        <span className="font-semibold">Your progress chapter:</span> {progress?.chapterId?.chapter_number || "Not started"}
                     </div>
                     <button
                         className="bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-6 rounded-full transition"
                         onClick={handleReading}
                     >
-                        Continue Reading
+                        {progress?.chapterId ? "Continue Reading" : "Start Reading"}
                     </button>
                 </div>
             </div>
