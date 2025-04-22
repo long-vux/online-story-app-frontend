@@ -62,7 +62,7 @@ const Comment = ({ story, currentUserId }) => {
           >
             <div className="flex justify-between items-center">
               <span className="font-semibold text-white">
-                {currentUserId === cmt.userId._id ? "You" : cmt.userId.username}
+              {currentUserId === cmt.userId?._id ? "You" : cmt.userId?.username || "Anonymous User"}
               </span>
               <span className="text-sm text-gray-500">
                 {cmt.createdAt?.split("T")[0]}

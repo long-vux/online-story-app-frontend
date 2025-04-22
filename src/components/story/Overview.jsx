@@ -17,7 +17,7 @@ const Overview = ({ story: initialStory, setActiveTab }) => {
     const token = JSON.parse(localStorage.getItem("user"));
     const userId = jwtDecode(token).userId;
 
-
+console.log('story',story);
     useEffect(() => {
         const checkSubscriptionStatus = async () => {
             try {

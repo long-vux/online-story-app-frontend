@@ -92,7 +92,11 @@ const Profile = () => {
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
-    // ... validation checks ...
+    
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      setError("Password and confirm password do not match!");
+      return;
+    }
     try {
       const res = await axios.put(
         `${API_URL}user/change-password/${userId}`,
@@ -231,7 +235,7 @@ const Profile = () => {
               }}
                 type="password"
                 placeholder="Confirm New Password"
-                className="mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="mt-2 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             {error && <p className="text-red-500">{error}</p>}

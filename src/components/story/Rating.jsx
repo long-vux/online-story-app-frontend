@@ -7,12 +7,12 @@ const Rating = ({ story, currentUserId, callBackAddRating }) => {
 
   // Kiểm tra xem người dùng đã đánh giá chưa
   const hasRated = story.ratings.some(
-    (rating) => rating.userId._id === currentUserId
+    (rating) => rating.userId?._id === currentUserId
   );
 
   // Tìm rating của người dùng hiện tại
   const userRating = story.ratings.find(
-    (rating) => rating.userId._id === currentUserId
+    (rating) => rating.userId?._id === currentUserId
   )?.rating;
 
   const handleMouseEnter = (index) => {
