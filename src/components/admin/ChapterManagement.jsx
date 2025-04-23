@@ -3,6 +3,9 @@ import axios from 'axios';
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ExcelExporter from '../../patterns/ExcelExporter';
+import PDFExporter from '../../patterns/PDFExporter';
+import CSVExporter from '../../patterns/CSVExporter';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -75,7 +78,7 @@ const ChapterManagement = ({ token }) => {
           },
           data: {
             story_id: newChapter.story_id,
-            title: newChapter.title, 
+            title: newChapter.title,
             content: newChapter.content,
             chapter_number: newChapter.chapter_number,
           }
@@ -154,9 +157,51 @@ const ChapterManagement = ({ token }) => {
     }
   };
 
+  const handleExport = (format) => {
+    let exporter;
+    switch (format) {
+      case 'excel':
+        exporter = new ExcelExporter();
+        break;
+      case 'pdf':
+        exporter = new PDFExporter();
+        break;
+      case 'csv':
+        exporter = new CSVExporter();
+        break;
+      default:
+        toast.error('Invalid export format');
+        return;
+    }
+    exporter.export(chapters); // Use the Template Pattern to export data
+    toast.success(`Chapters exported as ${format.toUpperCase()}!`);
+  };
+
   return (
     <div className="p-6 pt-0 flex-1 relative">
       <h3 className="text-2xl font-semibold mb-4">Chapter Management</h3>
+
+      {/* Export Buttons */}
+      <div className="mb-4 flex gap-4">
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+          onClick={() => handleExport('excel')}
+        >
+          Export to Excel
+        </button>
+        <button
+          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+          onClick={() => handleExport('pdf')}
+        >
+          Export to PDF
+        </button>
+        <button
+          className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded"
+          onClick={() => handleExport('csv')}
+        >
+          Export to CSV
+        </button>
+      </div>
 
       {/* Dropdown chọn story */}
       <div className="mb-4">
@@ -195,13 +240,13 @@ const ChapterManagement = ({ token }) => {
               <td className="p-2 border text-center max-w-xs truncate">{chapter.content}</td>
 
               <td className="p-2 border text-center">
-                <button 
+                <button
                   onClick={() => handleEditChapter(chapter)}
                   className="bg-blue-500 text-white px-2 py-2 rounded mr-2"
                 >
                   <FiEdit />
                 </button>
-                <button 
+                <button
                   onClick={() => handleDeleteClick(chapter)}
                   className="bg-red-500 text-white px-2 py-2 rounded"
                 >
@@ -372,7 +417,7 @@ const ChapterManagement = ({ token }) => {
               >
                 Cancel
               </button>
-              <button 
+              <button
                 onClick={handleDeleteChapter}
                 className="bg-red-500 text-white px-4 py-2 rounded"
               >
