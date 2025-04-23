@@ -2,19 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import ExcelExporter from '../../patterns/ExcelExporter';
+import PDFExporter from '../../patterns/PDFExporter';
+import CSVExporter from '../../patterns/CSVExporter';
 
 const StoryManagement = ({ token }) => {
   const [stories, setStories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditMode, setIsEditMode] = useState(false); // Để phân biệt giữa thêm và chỉnh sửa
-  const [currentStoryId, setCurrentStoryId] = useState(null); // Lưu ID của story đang chỉnh sửa
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [currentStoryId, setCurrentStoryId] = useState(null);
   const [newStory, setNewStory] = useState({
     title: '',
     description: '',
     author: '',
     genre: '',
     thumbnailFile: null,
-    status: 'ongoing', 
+    status: 'ongoing',
     number_of_chapters: 0,
   });
 
@@ -23,11 +26,10 @@ const StoryManagement = ({ token }) => {
     { id: 2, name: 'Romance' },
     { id: 3, name: 'Detective' },
     { id: 4, name: 'Horror' }
-  ]
+  ];
 
   const API_URL = process.env.REACT_APP_API_URL;
 
-  // Lấy danh sách stories và genres khi component mount
   useEffect(() => {
     fetchStories();
   }, []);
@@ -147,9 +149,52 @@ const StoryManagement = ({ token }) => {
     }
   };
 
+  const handleExport = (format) => {
+    let exporter;
+    switch (format) {
+      case 'excel':
+        exporter = new ExcelExporter();
+        break;
+      case 'pdf':
+        exporter = new PDFExporter();
+        break;
+      case 'csv':
+        exporter = new CSVExporter();
+        break;
+      default:
+        toast.error('Invalid export format');
+        return;
+    }
+    exporter.export(stories); // Use the Template Pattern to export data
+    toast.success(`Stories exported as ${format.toUpperCase()}!`);
+  };
+
   return (
     <div className="p-6 pt-0 flex-1 relative">
       <h3 className="text-2xl font-semibold mb-4">Story Management</h3>
+
+      {/* Export Buttons */}
+      <div className="mb-4 flex gap-4">
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+          onClick={() => handleExport('excel')}
+        >
+          Export to Excel
+        </button>
+        <button
+          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+          onClick={() => handleExport('pdf')}
+        >
+          Export to PDF
+        </button>
+        <button
+          className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded"
+          onClick={() => handleExport('csv')}
+        >
+          Export to CSV
+        </button>
+      </div>
+
       <table className="w-full table-auto border-collapse">
         <thead>
           <tr className="bg-gray-200">
