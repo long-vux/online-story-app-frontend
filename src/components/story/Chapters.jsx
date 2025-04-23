@@ -5,6 +5,7 @@ import downloadIcon from "../../assets/download.svg";
 import eyeicon from "../../assets/eye.svg";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+// import { toast } from "react-toastify";
 
 const ChaptersPage = ({storyId}) => {
     const navigate = useNavigate();
@@ -32,7 +33,6 @@ const ChaptersPage = ({storyId}) => {
     }, [])
 
     const handleOpenPage = async (chapterId) => {
-        // gọi API update progress (chapter đã đọc)
         const apiUrl = `${API_URL}progress`;
         try {
             const response = await axios.post(apiUrl, {
@@ -42,8 +42,6 @@ const ChaptersPage = ({storyId}) => {
             }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            console.log('response.data',response.data);
-            // Chuyển hướng đến trang đọc
             navigate(`/reading-view/${chapterId}`);
         } catch (error) {
             console.error('Error fetching story detail:', error);

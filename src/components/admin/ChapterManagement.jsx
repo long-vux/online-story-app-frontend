@@ -90,6 +90,7 @@ const ChapterManagement = ({ token }) => {
       }
     } catch (error) {
       console.error('Error adding chapter:', error);
+      toast.error(error.response.data.message || 'Failed to add chapter');
     }
   };
 
@@ -120,6 +121,7 @@ const ChapterManagement = ({ token }) => {
       }
     } catch (error) {
       console.error('Error updating chapter:', error);
+      toast.error(error.response.data.message || 'Failed to update chapter');
     }
   };
 

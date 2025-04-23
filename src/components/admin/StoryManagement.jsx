@@ -14,7 +14,7 @@ const StoryManagement = ({ token }) => {
     author: '',
     genre: '',
     thumbnailFile: null,
-    status: 'ongoing',
+    status: 'ongoing', 
     number_of_chapters: 0,
   });
 

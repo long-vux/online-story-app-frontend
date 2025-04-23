@@ -36,6 +36,20 @@ const Notification = () => {
     }
   };
 
+
+  const MarkAsRead = async (notiId) => {
+    try {
+      await axios.patch(`${API_URL}notifications/${notiId}/read`);
+      setNotifications((prev) =>
+        prev.map((noti) =>
+          noti._id === notiId ? { ...noti, isRead: true } : noti
+        )
+      );
+    } catch (err) {
+      console.error('Lỗi khi đánh dấu thông báo:', err);
+    }
+  }
+
   // Tính tổng số trang
   const totalPages = Math.ceil(notifications.length / itemsPerPage);
 
@@ -65,9 +79,15 @@ const Notification = () => {
             {paginatedNotis.map((noti) => (
               <div
                 key={noti._id}
-                className={`p-3 rounded-lg flex justify-between items-center ${
+                className={`p-3 rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-700 hover:text-white ${
                   noti.isRead ? 'bg-gray-700 text-white' : 'bg-white text-black'
                 }`}
+                onClick={() => MarkAsRead(noti._id)}
+                onMouseOver={() => {
+                  if (!noti.isRead) {
+                    MarkAsRead(noti._id);
+                  }
+                }}
               >
                 <div>
                   <p className="text-sm">{noti.message}</p>
@@ -86,7 +106,7 @@ const Notification = () => {
             onClick={markAllAsRead}
             className="bg-blue-500 text-white px-4 py-2 rounded"
           >
-            Đánh dấu tất cả là đã đọc
+            Mark all as read
           </button>
 
           {/* Pagination */}
