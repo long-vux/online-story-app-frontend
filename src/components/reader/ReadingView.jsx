@@ -42,12 +42,12 @@ const ReadingView = ({ themeStrategy }) => {
   return (
     <div className="max-w-[800px] mx-auto p-5">
       {/* Nút chuyển đổi chế độ đọc */}
-      <div className="mb-4 flex justify-center space-x-4">
+      <div className="mb-4 flex justify-end space-x-4">
         <button
           onClick={toggleReadingMode}
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+          className="px-4 py-2 bg-gray-700 text-white rounded-lg transition"
         >
-          Switch to {readingMode === "page-flip" ? "Scroll" : "Page Flip"} Mode
+           {readingMode === "page-flip" ? "Scroll" : "Page Flip"} Mode
         </button>
       </div>
 

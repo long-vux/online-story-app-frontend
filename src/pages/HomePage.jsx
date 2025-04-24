@@ -47,7 +47,7 @@ const HomePage = () => {
 
         {/* Hot Categories */}
         <section className="mb-10">
-          <h2 className="text-xl font-semibold mb-4 text-pink-400">Categories</h2>
+          <h2 className="text-xl font-semibold mb-4">Genres</h2>
           <div className="flex flex-wrap gap-2">
             {categories.map((category, idx) => (
               <button

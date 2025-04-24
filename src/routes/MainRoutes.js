@@ -13,6 +13,7 @@ import { DayModeStrategy, NightModeStrategy } from '../components/reader/DayNigh
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-toastify';
 import socket from '../socket';
+import Donate from '../pages/Donate';
 
 const MainRoutes = () => {
   const [themeMode, setThemeMode] = useState(localStorage.getItem("themeMode") || "day");
@@ -98,6 +99,7 @@ const MainRoutes = () => {
             <Route path="/notifications" element={<Notification themeMode={themeMode} />} />
             <Route path="/story-detail/:storyId" element={<StoryDetail themeMode={themeMode} />} />
             <Route path="/reading-view/:chapterId" element={<ReadingView themeStrategy={themeStrategy} />} />
+            <Route path="/donate" element={<Donate  />} />
             <Route path="*" element={<div>Page not found</div>} />
           </Routes>
         </div>

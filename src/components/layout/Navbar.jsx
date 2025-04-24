@@ -17,11 +17,8 @@ import { jwtDecode } from 'jwt-decode';
 
 const pathToLabel = {
   "/": "Home",
-  "/discover": "Discover Comics",
   "/notifications": "Notifications",
   "/profile": "Profile",
-  "/my-list": "My List",
-  "/settings": "Settings",
   "/donate": "Donate",
   "/login": "Login",
   "/dashboard": "Dashboard",
@@ -51,7 +48,6 @@ const Navbar = ({ themeMode }) => {
     () => ({
       Menu: [
         { label: "Home", icon: <FaHome />, link: "/" },
-        { label: "Discover Comics", icon: <FaCompass />, link: "/discover" },
         { label: "Notifications", icon: <FaBell />, link: "/notifications" },
         isAdmin
           ? { label: "Dashboard", icon: <MdLeaderboard />, link: "/admin/dashboard" }
@@ -59,8 +55,6 @@ const Navbar = ({ themeMode }) => {
       ],
       General: [
         { label: "Profile", icon: <FaUser />, link: "/profile" },
-        { label: "My List", icon: <FaList />, link: "/my-list" },
-        { label: "Settings", icon: <FaCog />, link: "/settings" },
         { label: "Donate", icon: <FaDonate />, link: "/donate" },
         isLoggedIn
           ? { label: "Logout", icon: <FaSignOutAlt />, link: "/logout" }
